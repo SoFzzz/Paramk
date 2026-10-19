@@ -1,0 +1,468 @@
+@import 'tailwindcss';
+
+/* ---------- Tokens del design system (ver docs/PLAN-PORTAFOLIO.md §5) ---------- */
+@theme {
+	/* Paleta cálida: rojo, naranja, amarillo, casi negro y gris claro */
+	--color-text: #0d0000;
+	--color-background: #f2f2f2;
+	--color-primary: #bf2424;
+	--color-secondary: #0d0000;
+	--color-accent: #f29544;
+	--color-highlight: #f2d479;
+	--color-surface: #ffffff;
+	--color-chip: color-mix(in oklab, var(--color-highlight) 45%, var(--color-background));
+	--color-muted: color-mix(in oklab, var(--color-text) 65%, var(--color-background));
+
+
+	--breakpoint-sm: 40rem;
+	--breakpoint-md: 48rem;
+	--breakpoint-lg: 64rem;
+	--breakpoint-xl: 80rem;
+
+	--ease-snap: cubic-bezier(0.7, 0, 0.2, 1);
+	--ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Fuentes de next/font (variables definidas en layout.tsx) */
+@theme inline {
+	--font-display: var(--font-anton), Impact, sans-serif;
+	--font-sans: var(--font-inter), system-ui, sans-serif;
+}
+
+:root {
+	--skew: -2deg;
+	color-scheme: light;
+}
+@media (min-width: 48rem) {
+	:root {
+		--skew: -4deg;
+	}
+}
+@media (min-width: 64rem) {
+	:root {
+		--skew: -8deg;
+	}
+}
+
+/* Estilos base dentro de @layer para no pisar las utilidades de Tailwind */
+@layer base {
+	html {
+		background: var(--color-background);
+		color: var(--color-text);
+		scroll-behavior: smooth;
+	}
+	body {
+		margin: 0;
+		min-height: 100dvh;
+		overflow-x: hidden;
+	}
+	/* Dentro de <main>, los enlaces/botones/tarjetas que gestiona KeyNav muestran el foco con el
+	   bloque rojo estilo menú (cada componente estiliza :focus-visible y [data-selected]), no con contorno. */
+	:focus-visible:not(
+			#contenido a[href],
+			#contenido button,
+			#contenido [role='button'],
+			#contenido [data-nav-group]
+		) {
+		outline: 3px solid var(--color-accent);
+		outline-offset: 3px;
+		box-shadow: 0 0 0 3px var(--color-primary);
+	}
+	#contenido :is(a[href], button, [role='button'], [data-nav-group]):focus-visible {
+		outline: none;
+	}
+}
+
+/* ---------- Fondo vivo ---------- */
+@keyframes pf-marquee {
+	from { transform: translateX(0); }
+	to { transform: translateX(-50%); }
+}
+@keyframes pf-float {
+	from { transform: translateY(0) rotate(-1.5deg); }
+	to { transform: translateY(-18px) rotate(1.5deg); }
+}
+/* Siluetas: entrada y movimientos en bucle */
+@keyframes pf-enter {
+	from { opacity: 0; transform: translateX(60px); }
+	to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pf-sway {
+	from { transform: rotate(-2.5deg); }
+	to { transform: rotate(2.5deg); }
+}
+@keyframes pf-breathe {
+	from { transform: scale(1) translateY(0); }
+	to { transform: scale(1.025) translateY(-6px); }
+}
+@keyframes pf-run {
+	from { transform: translateX(-46vw); }
+	to { transform: translateX(104vw); }
+}
+@keyframes pf-bob {
+	from { transform: translateY(0); }
+	to { transform: translateY(-1.4vh); }
+}
+.pf-enter { animation: pf-enter 900ms var(--ease-out-expo) 500ms both; }
+.pf-sway { animation: pf-sway 6s ease-in-out infinite alternate; }
+.pf-breathe { animation: pf-breathe 4.5s ease-in-out infinite alternate; }
+.pf-run { animation: pf-run 38s linear infinite; }
+.pf-bob { animation: pf-bob 0.5s ease-in-out infinite alternate; }
+.pf-marquee { animation: pf-marquee 45s linear infinite; }
+.pf-float { animation: pf-float 5s ease-in-out infinite alternate; }
+
+/* ---------- Deslizamiento en el compositor ----------
+   Un patrón que se repite cada --tile px se desliza con transform (no repinta ni recalcula estilos).
+   Va fuera de @layer para ganar a las utilidades de Tailwind. */
+@keyframes pf-slide {
+	to { transform: translateX(calc(var(--tile) * -1)); }
+}
+.pf-stripes,
+.pf-stripes-fast,
+.pf-scroll,
+.pf-mscroll {
+	/* alarga la caja una baldosa para que el deslizamiento no deje hueco */
+	margin-right: calc(var(--tile) * -1);
+	animation: pf-slide var(--dur) linear infinite;
+}
+
+/* ---------- Siluetas: movimientos nuevos y fondos de las páginas claras ---------- */
+@keyframes pf-drift-in {
+	from { transform: translateX(16vw); }
+	to { transform: translateX(0); }
+}
+@keyframes pf-idle {
+	from { transform: translateY(0); }
+	to { transform: translateY(-1.4vh); }
+}
+@keyframes pf-step {
+	0%, 100% { transform: translateY(0) rotate(-0.8deg); }
+	50% { transform: translateY(-1.8vh) rotate(0.8deg); }
+}
+@keyframes pf-tilt {
+	from { transform: rotate(-4deg); }
+	to { transform: rotate(4deg); }
+}
+@keyframes pf-flutter {
+	from { transform: skewX(-2.5deg) translateX(-0.6vw); }
+	to { transform: skewX(2.5deg) translateX(0.6vw); }
+}
+@keyframes pf-parallax {
+	from { transform: translateY(0); }
+	to { transform: translateY(-9vh); }
+}
+.pf-drift { animation: pf-drift-in 3s var(--ease-out-expo) 0.9s both, pf-idle 6s ease-in-out 3.9s infinite alternate; }
+.pf-step { animation: pf-step 1.7s ease-in-out infinite; }
+.pf-tilt { animation: pf-tilt 9s ease-in-out infinite alternate; }
+.pf-flutter { animation: pf-flutter 3.4s ease-in-out infinite alternate; }
+/* Sube un poco al hacer scroll (scroll-driven); si el navegador no lo soporta, queda quieta */
+@supports (animation-timeline: scroll()) {
+	.pf-parallax {
+		animation: pf-parallax linear both;
+		animation-timeline: scroll(root block);
+	}
+}
+
+@keyframes pf-spin {
+	to { transform: rotate(360deg); }
+}
+@keyframes pf-dots-move {
+	to { transform: translate(var(--tile), var(--tile)); }
+}
+@keyframes pf-shard-move {
+	from { transform: translate3d(-45vw, 0, 0); }
+	to { transform: translate3d(125vw, 0, 0); }
+}
+@keyframes pf-rise-move {
+	0% { transform: translate3d(0, 108vh, 0) rotate(0deg); opacity: 0; }
+	12%, 85% { opacity: var(--op); }
+	100% { transform: translate3d(0, -14vh, 0) rotate(var(--spin)); opacity: 0; }
+}
+.pf-spin { animation: pf-spin var(--dur) linear infinite; }
+.pf-dots {
+	top: calc(var(--tile) * -1);
+	left: calc(var(--tile) * -1);
+	width: calc(100% + var(--tile));
+	height: calc(100% + var(--tile));
+	animation: pf-dots-move var(--dur) linear infinite;
+}
+.pf-shard { animation: pf-shard-move 60s linear infinite; }
+.pf-rise { animation: pf-rise-move linear infinite; }
+
+/* ---------- Silueta: color y opacidad (móvil / escritorio) ---------- */
+.sil-tone {
+	opacity: var(--o-sm);
+	background: var(--c-sm);
+}
+@media (min-width: 64rem) {
+	.sil-tone {
+		opacity: var(--o);
+		background: var(--c);
+	}
+}
+
+/* ---------- Mar (Sobre mí): olas en silueta que se deslizan y brillos que titilan ---------- */
+/* Agua del mar: banda simple en móvil y forma con cubierta desde md (las formas llegan como variables) */
+.sea-clip {
+	--sea-top: 50vh;
+	clip-path: var(--clip-sm);
+}
+@media (min-width: 48rem) {
+	.sea-clip {
+		--sea-top: 62vh;
+		clip-path: var(--clip-md);
+	}
+}
+@keyframes pf-glint {
+	0%, 100% { opacity: 0; transform: scaleX(0.3); }
+	50% { opacity: 0.85; transform: scaleX(1); }
+}
+.pf-wave-rev { animation-direction: reverse; }
+.pf-glint { opacity: 0; animation: pf-glint ease-in-out infinite; }
+
+/* ---------- Estrellas (Proyectos) ---------- */
+.pf-star {
+	position: absolute;
+	top: 0;
+	clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+}
+@keyframes pf-fall {
+	0% { transform: translate3d(0, -8vh, 0) rotate(0deg); opacity: 0; }
+	10%, 85% { opacity: var(--op); }
+	100% { transform: translate3d(var(--drift), 108vh, 0) rotate(220deg); opacity: 0; }
+}
+@keyframes pf-twinkle {
+	0%, 100% { transform: scale(0.35) rotate(0deg); opacity: 0.08; }
+	50% { transform: scale(1) rotate(45deg); opacity: var(--op); }
+}
+.pf-fall { animation: pf-fall linear infinite; }
+.pf-twinkle { animation: pf-twinkle ease-in-out infinite; }
+
+/* ---------- Metro (Contacto): paisaje que pasa, postes y destellos ---------- */
+@keyframes pf-tunnel {
+	0%, 58% { transform: translateX(-130%); opacity: 0; }
+	60% { opacity: 1; }
+	78% { transform: translateX(260%); opacity: 1; }
+	80%, 100% { transform: translateX(260%); opacity: 0; }
+}
+@keyframes pf-glare {
+	0%, 84% { opacity: 0; }
+	88% { opacity: 0.55; }
+	100% { opacity: 0; }
+}
+@keyframes pf-lean {
+	from { transform: rotate(-0.35deg); }
+	to { transform: rotate(0.35deg); }
+}
+@keyframes pf-rattle {
+	0% { transform: translateY(0); }
+	25% { transform: translateY(-1.5px); }
+	50% { transform: translateY(1px); }
+	75% { transform: translateY(-0.5px); }
+	100% { transform: translateY(0); }
+}
+.pf-tunnel { opacity: 0; animation: pf-tunnel 9s linear infinite; }
+.pf-glare { opacity: 0; animation: pf-glare 13s ease-in-out infinite; }
+.pf-lean { animation: pf-lean 5s ease-in-out infinite alternate; }
+.pf-rattle { animation: pf-rattle 0.32s linear infinite; }
+
+/* ---------- Movimiento reducido ----------
+   data-motion lo fija un script en layout.tsx (preferencia del sistema o interruptor del sitio). */
+html[data-motion='off'] .pf-marquee,
+html[data-motion='off'] .pf-stripes,
+html[data-motion='off'] .pf-stripes-fast,
+html[data-motion='off'] .pf-float,
+html[data-motion='off'] .pf-enter,
+html[data-motion='off'] .pf-sway,
+html[data-motion='off'] .pf-breathe,
+html[data-motion='off'] .pf-run,
+html[data-motion='off'] .pf-bob,
+html[data-motion='off'] .pf-scroll,
+html[data-motion='off'] .pf-tunnel,
+html[data-motion='off'] .pf-glare,
+html[data-motion='off'] .pf-lean,
+html[data-motion='off'] .pf-rattle,
+html[data-motion='off'] .pf-twinkle,
+html[data-motion='off'] .pf-fall,
+html[data-motion='off'] .pf-mscroll,
+html[data-motion='off'] .pf-spin,
+html[data-motion='off'] .pf-dots,
+html[data-motion='off'] .pf-shard,
+html[data-motion='off'] .pf-drift,
+html[data-motion='off'] .pf-step,
+html[data-motion='off'] .pf-tilt,
+html[data-motion='off'] .pf-flutter,
+html[data-motion='off'] .pf-parallax,
+html[data-motion='off'] .pf-rise,
+html[data-motion='off'] .pf-glint {
+	animation: none;
+}
+html[data-motion='off'] .pf-glint {
+	opacity: 0.5;
+}
+html[data-motion='off'] {
+	scroll-behavior: auto;
+}
+html[data-motion='off'] .pf-shard {
+	transform: translateX(30vw);
+}
+html[data-motion='off'] .pf-rise {
+	transform: translateY(var(--y0));
+	opacity: var(--op);
+}
+/* Sin animación: las estrellas quedan en una posición fija repartida */
+html[data-motion='off'] .pf-fall {
+	transform: translateY(var(--y0));
+	opacity: var(--op);
+}
+html[data-motion='off'] .pf-twinkle {
+	opacity: var(--op);
+}
+html[data-motion='off'] *,
+html[data-motion='off'] *::before,
+html[data-motion='off'] *::after {
+	transition-duration: 0.01ms !important;
+}
+
+/* Utilidad: salto a contenido */
+.skip-link {
+	position: fixed;
+	left: 12px;
+	top: -80px;
+	z-index: 100;
+	padding: 12px 18px;
+	background: var(--color-primary);
+	color: #fff;
+	font-weight: 600;
+}
+.skip-link:focus {
+	top: 12px;
+}
+
+/* ---------- Button (atoms/Button.tsx) ----------
+   Lo rojo es de quien está seleccionado (teclado o puntero: KeyNav pone `data-selected` en ambos casos). Si el botón
+   está dentro de un `.btn-row` y otro botón de la fila está seleccionado, el principal pasa a blanco con borde rojo
+   y el rojo "se mueve" al seleccionado. Sin selección, el principal es rojo y el secundario blanco. */
+.btn {
+	border: 3px solid var(--color-primary);
+	background: var(--color-surface);
+	color: var(--color-primary);
+	box-shadow: 5px 5px 0 var(--color-secondary);
+	transition: color 0.2s;
+}
+.btn-fill {
+	background: var(--color-primary);
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.2s var(--ease-snap);
+}
+.btn-text {
+	transition: transform 0.2s var(--ease-out-expo);
+}
+.btn-line {
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.3s var(--ease-out-expo);
+}
+.btn[data-variant='primary'] {
+	color: #fff;
+}
+.btn[data-variant='primary'] .btn-fill {
+	transform: scaleX(1);
+}
+.btn-row:has([data-selected]) .btn[data-variant='primary']:not([data-selected]) {
+	color: var(--color-primary);
+}
+.btn-row:has([data-selected]) .btn[data-variant='primary']:not([data-selected]) .btn-fill {
+	transform: scaleX(0);
+}
+.btn-row:has([data-selected]) .btn[data-variant='primary']:not([data-selected]) svg.text-highlight {
+	color: var(--color-primary);
+}
+.btn[data-selected] {
+	color: #fff;
+}
+.btn[data-selected] .btn-fill {
+	transform: scaleX(1);
+}
+.btn[data-selected] .btn-text {
+	transform: translateX(0.375rem);
+}
+.btn[data-selected] .btn-line {
+	transform: scaleX(1);
+	transition-delay: 75ms;
+}
+
+/* ---------- CardFrame (atoms/CardFrame.tsx) ----------
+   Fondo y sombra de una tarjeta. La sombra es un bloque oscuro con la forma de la tarjeta: en reposo asoma 6/8 px y,
+   al seleccionarla, se desliza en diagonal mientras la tarjeta se eleva. Solo depende de [data-selected].
+   La tarjeta que lo contiene debe tener las clases `nav-card relative isolate`. */
+.cf-paper {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	background: var(--color-surface);
+}
+.cf-shade {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	pointer-events: none;
+	background: var(--color-secondary);
+	transform: translate(6px, 6px);
+	transition: transform 0.22s var(--ease-snap);
+}
+.nav-card {
+	transition: transform 0.2s ease-out;
+}
+@media (min-width: 48rem) {
+	.cf-shade {
+		transform: translate(8px, 8px);
+	}
+}
+.nav-card:is([data-selected], :has([data-selected])) {
+	transform: translate(-3px, -3px) scale(1.03);
+	z-index: 1;
+}
+.nav-card:is([data-selected], :has([data-selected])) .cf-shade {
+	transform: translate(19px, 19px);
+}
+@media (min-width: 48rem) {
+	.nav-card:is([data-selected], :has([data-selected])) .cf-shade {
+		transform: translate(23px, 23px);
+	}
+}
+
+/* ---------- SocialLink (molecules/SocialLink.tsx) ----------
+   Estado activo = seleccionado; sin nada activo, el primero de la lista (como el menú de inicio). */
+.sl[data-selected] .sl-block,
+ul.sl-list:not(:has([data-selected])) > li:first-child .sl .sl-block,
+.sl[data-selected] .sl-line,
+ul.sl-list:not(:has([data-selected])) > li:first-child .sl .sl-line {
+	--tw-scale-x: 100%;
+}
+.sl[data-selected] .sl-text,
+ul.sl-list:not(:has([data-selected])) > li:first-child .sl .sl-text {
+	transform: translateX(0.5rem);
+}
+.sl[data-selected] :is(.sl-title, .sl-handle),
+ul.sl-list:not(:has([data-selected])) > li:first-child .sl :is(.sl-title, .sl-handle) {
+	color: #fff;
+}
+.sl[data-selected] :is(.sl-icon, .sl-arrow),
+ul.sl-list:not(:has([data-selected])) > li:first-child .sl :is(.sl-icon, .sl-arrow) {
+	color: var(--color-highlight);
+}
+.sl-line {
+	transition-delay: 75ms;
+}
+.sl:not([data-selected]) .sl-line {
+	transition-delay: 0ms;
+}
+
+/* ---------- Cortina de transición (organisms/TransitionCurtain.tsx) ----------
+   Los paneles y la etiqueta los anima transition.ts con la Web Animations API. */
+.curtain-panel {
+	transform: translateX(-130%);
+}
