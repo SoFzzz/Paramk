@@ -1,6 +1,6 @@
 import ExperienceTimeline from '@/components/organisms/ExperienceTimeline';
 import SectionShell from '@/components/templates/SectionShell';
-import { academic, projectExperience } from '@/lib/data/experience';
+import { academic, projectExperience, work } from '@/lib/data/experience';
 import { pageTitle, ui } from '@/lib/data/ui';
 import { buildMetadata } from '@/lib/seo';
 
@@ -11,6 +11,7 @@ export default function ExperiencePage() {
 		<SectionShell title={ui.experience.title} intro={ui.experience.intro}>
 			<div className="grid min-w-0 gap-10 lg:max-w-[62%] lg:gap-12">
 				<ExperienceTimeline heading={ui.experience.academic} items={academic} />
+				<ExperienceTimeline heading={ui.experience.work} items={work} />
 				<ExperienceTimeline heading={ui.experience.projects} items={projectExperience} />
 			</div>
 		</SectionShell>

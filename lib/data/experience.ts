@@ -1,5 +1,5 @@
 /**
- * Experiencia: formación académica y proyectos de desarrollo (los de mi GitHub).
+ * Experiencia: formación académica, experiencia laboral (freelance) y proyectos de desarrollo (los de mi GitHub).
  * La formación sale de `profile.education` (el semestre se calcula solo).
  * Los periodos de cada proyecto van del repo creado al último push en GitHub.
  */
@@ -57,6 +57,22 @@ const fromProject = (slug: string, period: string, achievement: string, extra: P
 		...extra
 	};
 };
+
+/** Experiencia laboral: el trabajo freelance son los proyectos personales (desde el primero, Tarium, en abril de 2026). */
+export const work: ExperienceItem[] = [
+	{
+		id: 'freelance',
+		title: 'Desarrolladora freelance',
+		org: 'Independiente · proyectos personales',
+		period: 'Abr 2026 – Actualidad',
+		description:
+			'Idea, diseño y programación en solitario de Likka-Pet, WakeSync, ClearRead, Tarium y Notiz: apps Android y Wear OS, una app de escritorio, una web y backends.',
+		achievement: 'Cinco proyectos publicados en GitHub, del backend al móvil y la web.',
+		tags: ['Kotlin', 'Jetpack Compose', 'Java', 'Spring Boot', 'Python', 'FastAPI', 'Next.js', 'TypeScript'],
+		href: '/proyectos/',
+		badge: 'Freelance'
+	}
+];
 
 /** Proyectos de desarrollo, del más reciente al más antiguo. */
 export const projectExperience: ExperienceItem[] = [

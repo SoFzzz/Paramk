@@ -72,8 +72,9 @@ export const ui = {
 		title: navLabel('experiencia'),
 		description:
 			'Experiencia de Paula Sofía González: Ingeniería de Software en la UCC y los proyectos de desarrollo de su GitHub, con fechas, rol y tecnologías.',
-		intro: 'Mi experiencia: la universidad donde estudio y los proyectos de desarrollo que tengo en GitHub.',
+		intro: 'Mi experiencia: la universidad donde estudio, mi trabajo freelance y los proyectos de desarrollo que tengo en GitHub.',
 		academic: 'Experiencia académica',
+		work: 'Experiencia laboral',
 		projects: 'Proyectos de desarrollo',
 		viewProject: 'Ver proyecto',
 		repo: 'GitHub'
