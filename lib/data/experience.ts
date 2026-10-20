@@ -1,11 +1,26 @@
 /**
- * Experiencia: formación académica, experiencia laboral (freelance) y proyectos de desarrollo (los de mi GitHub).
+ * Experiencia: formación académica, experiencia laboral (freelance, con sus proyectos personales dentro) y proyectos en equipo.
  * La formación sale de `profile.education` (el semestre se calcula solo).
  * Los periodos de cada proyecto van del repo creado al último push en GitHub.
  */
 import { game } from './game';
 import { profile } from './profile';
 import { projects } from './projects';
+
+/** Proyecto anidado dentro de una entrada (p. ej. un proyecto personal dentro de la experiencia freelance). */
+export type ExperienceSubItem = {
+	id: string;
+	title: string;
+	/** Texto del periodo (p. ej. "Sep 2026 – Oct 2026"). */
+	period: string;
+	/** Plataforma o tecnología principal (p. ej. "Android"). */
+	platform: string;
+	achievement: string;
+	/** Enlace interno a la página del proyecto. */
+	href: string;
+	/** Repositorio en GitHub. */
+	repo: string;
+};
 
 export type ExperienceItem = {
 	id: string;
@@ -22,8 +37,10 @@ export type ExperienceItem = {
 	href?: string;
 	/** Repositorio en GitHub. */
 	repo?: string;
-	/** Etiqueta de modalidad (Colaborativo · equipo de 3, Personal). */
+	/** Etiqueta de modalidad (Colaborativo · equipo de 3, Personal, Freelance). */
 	badge?: string;
+	/** Proyectos anidados dentro de la entrada, del más reciente al más antiguo. */
+	children?: ExperienceSubItem[];
 };
 
 export const academic: ExperienceItem[] = profile.education.map((e, i) => ({
@@ -41,7 +58,14 @@ const bySlug = (slug: string) => {
 	return p;
 };
 
-const fromProject = (slug: string, period: string, achievement: string, extra: Partial<ExperienceItem> = {}): ExperienceItem => {
+/** Entrada de un proyecto personal anidada en la experiencia freelance. */
+const personalSub = (slug: string, period: string, achievement: string): ExperienceSubItem => {
+	const p = bySlug(slug);
+	return { id: slug, title: p.title, period, platform: p.platform, achievement, href: `/proyectos/${p.slug}/`, repo: p.repo };
+};
+
+/** Entrada de un proyecto colaborativo, con su insignia de equipo. */
+const teamItem = (slug: string, period: string, achievement: string): ExperienceItem => {
 	const p = bySlug(slug);
 	return {
 		id: slug,
@@ -53,29 +77,32 @@ const fromProject = (slug: string, period: string, achievement: string, extra: P
 		tags: p.stack,
 		href: `/proyectos/${p.slug}/`,
 		repo: p.repo,
-		badge: p.kind === 'collaborative' ? 'Colaborativo · equipo de 3' : 'Personal',
-		...extra
+		badge: 'Colaborativo · equipo de 3'
 	};
 };
 
-/** Experiencia laboral: el trabajo freelance son los proyectos personales (desde el primero, Tarium, en abril de 2026). */
+/** Experiencia laboral: el trabajo freelance son mis proyectos personales (desde el primero, Tarium, en abril de 2026). Del más reciente al más antiguo. */
 export const work: ExperienceItem[] = [
 	{
 		id: 'freelance',
 		title: 'Desarrolladora freelance',
 		org: 'Independiente · proyectos personales',
 		period: 'Abr 2026 – Actualidad',
-		description:
-			'Idea, diseño y programación en solitario de Likka-Pet, WakeSync, ClearRead, Tarium y Notiz: apps Android y Wear OS, una app de escritorio, una web y backends.',
-		achievement: 'Cinco proyectos publicados en GitHub, del backend al móvil y la web.',
+		description: 'Idea, diseño y programación en solitario de mis proyectos personales: apps Android y Wear OS, una app de escritorio, una web y backends.',
 		tags: ['Kotlin', 'Jetpack Compose', 'Java', 'Spring Boot', 'Python', 'FastAPI', 'Next.js', 'TypeScript'],
-		href: '/proyectos/',
-		badge: 'Freelance'
+		badge: 'Freelance',
+		children: [
+			personalSub('clearread', 'Sep 2026 – Oct 2026', 'Un lector para estudiantes con dislexia: sílabas en color, lectura en voz alta y asistente de IA.'),
+			personalSub('wakesync', 'Sep 2026 – Oct 2026', 'Una app de reloj que estima el reposo en el trayecto y avisa con vibración al llegar.'),
+			personalSub('likka-pet', 'Sep 2026 – Oct 2026', 'Una mascota virtual que cuida la postura y frena la procrastinación.'),
+			personalSub('notiz-java', 'May 2026 – Jun 2026', 'Backend académico con roles, JWT, chat en tiempo real y reportes en PDF, Excel y CSV.'),
+			personalSub('tarium', 'Abr 2026', 'Reproductor web que une cuatro fuentes de música, con una API de respaldo (Tarium-BD).')
+		]
 	}
 ];
 
-/** Proyectos de desarrollo, del más reciente al más antiguo. */
-export const projectExperience: ExperienceItem[] = [
+/** Proyectos en equipo, del más reciente al más antiguo. */
+export const team: ExperienceItem[] = [
 	{
 		id: 'descending',
 		title: game.title,
@@ -88,10 +115,5 @@ export const projectExperience: ExperienceItem[] = [
 		repo: game.links.repo,
 		badge: 'Colaborativo · equipo de 3'
 	},
-	fromProject('clearread', 'Sep 2026 – Oct 2026', 'Un lector para estudiantes con dislexia: sílabas en color, lectura en voz alta y asistente de IA.'),
-	fromProject('wakesync', 'Sep 2026 – Oct 2026', 'Una app de reloj que estima el reposo en el trayecto y avisa con vibración al llegar.'),
-	fromProject('likka-pet', 'Sep 2026 – Oct 2026', 'Una mascota virtual que cuida la postura y frena la procrastinación.'),
-	fromProject('notiz-java', 'May 2026 – Jun 2026', 'Backend académico con roles, JWT, chat en tiempo real y reportes en PDF, Excel y CSV.'),
-	fromProject('tarium', 'Abr 2026', 'Reproductor web que une cuatro fuentes de música, con una API de respaldo (Tarium-BD).'),
-	fromProject('veltro', 'Mar 2026 – May 2026', 'Escáner de productos con IA y búsqueda semántica con pgvector sobre una API REST con JWT.')
+	teamItem('veltro', 'Mar 2026 – May 2026', 'Escáner de productos con IA y búsqueda semántica con pgvector sobre una API REST con JWT.')
 ];

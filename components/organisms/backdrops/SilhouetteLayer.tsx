@@ -7,14 +7,16 @@ const place = {
 	'right-tall': 'right-[-6%] bottom-0 h-[44vh] w-[78vw] lg:right-[1%] lg:h-[96vh] lg:w-[42vw]',
 	'bottom-wide': 'right-[-4%] bottom-0 h-[30vh] w-[104vw] md:right-[2%] md:h-[58vh] md:w-[60vw]',
 	'top-right': 'right-0 top-0 h-[22vh] w-[92vw] md:h-[36vh] md:w-[52vw]',
-	run: 'left-0 bottom-0 h-[20vh] w-[42vw]'
+	run: 'left-0 bottom-0 h-[20vh] w-[42vw]',
+	bust: 'right-0 bottom-0 h-[34vh] w-[60vw] md:h-[62vh] md:w-[46vw]'
 } as const;
 const anchor = {
 	right: 'center bottom',
 	'right-tall': 'center bottom',
 	'bottom-wide': 'center bottom',
 	'top-right': 'center top',
-	run: 'center bottom'
+	run: 'center bottom',
+	bust: 'right bottom'
 } as const;
 const origin = {
 	sway: 'origin-top',
@@ -24,17 +26,17 @@ const origin = {
 	none: ''
 } as const;
 
-/** Silueta de personaje: solo se usa su forma (máscara CSS), pintada del color indicado en scene.ts. */
-export default function SilhouetteLayer({ sil }: { sil: Silhouette }) {
+/** Silueta de personaje (con `tint`, la copia de otro color que va dentro del pie de página): solo se usa su forma (máscara CSS), pintada del color indicado en scene.ts. */
+export default function SilhouetteLayer({ sil, tint }: { sil: Silhouette; tint?: { color: string; opacity: number } }) {
 	const url = `url(${sil.src})`;
 	// Por debajo de su ancho mínimo solo se ve si la silueta es 'sm' o define smOpacity.
 	const visibility = sil.from === 'sm' || sil.smOpacity !== undefined ? '' : sil.from === 'lg' ? 'hidden lg:block' : 'hidden md:block';
 	const m = `${url} ${anchor[sil.pos]} / contain no-repeat`;
 	const style: CSSVars = {
-		'--o': sil.opacity,
-		'--o-sm': sil.smOpacity ?? sil.opacity,
-		'--c': `var(--color-${sil.tone})`,
-		'--c-sm': `var(--color-${sil.smTone ?? sil.tone})`,
+		'--o': tint ? tint.opacity : sil.opacity,
+		'--o-sm': tint ? tint.opacity : (sil.smOpacity ?? sil.opacity),
+		'--c': tint ? tint.color : `var(--color-${sil.tone})`,
+		'--c-sm': tint ? tint.color : `var(--color-${sil.smTone ?? sil.tone})`,
 		WebkitMask: m,
 		mask: m,
 		...(sil.flip ? { transform: 'scaleX(-1)' } : {})

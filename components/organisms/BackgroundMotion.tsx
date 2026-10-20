@@ -2,9 +2,9 @@
 import type { CSSVars } from '@/lib/utils/css';
 import { usePathname } from 'next/navigation';
 import { findNav, type Scene } from '@/lib/data/nav';
-import { silhouettes, type Silhouette } from '@/lib/data/scene';
+import { silhouetteFor, type Silhouette } from '@/lib/data/scene';
 import MetroBackdrop from './backdrops/MetroBackdrop';
-import { CrossesBackdrop, HalftoneBackdrop, PetalsBackdrop, ShardsBackdrop, SunburstBackdrop } from './backdrops/LightBackdrops';
+import { BubblesBackdrop, CrossesBackdrop, HalftoneBackdrop, PetalsBackdrop, ShardsBackdrop } from './backdrops/LightBackdrops';
 import SeaBackdrop from './backdrops/SeaBackdrop';
 import SilhouetteLayer from './backdrops/SilhouetteLayer';
 import StarsBackdrop from './backdrops/StarsBackdrop';
@@ -12,7 +12,7 @@ import StarsBackdrop from './backdrops/StarsBackdrop';
 /** Fondo según la ruta actual: cada sección elige su escena (ver nav.ts) y su silueta fija (ver scene.ts). */
 export default function RouteBackground() {
 	const current = findNav(usePathname());
-	return <BackgroundMotion scene={current.scene} sil={silhouettes[current.id] ?? null} />;
+	return <BackgroundMotion scene={current.scene} sil={silhouetteFor(current.id, current.href)} />;
 }
 
 // Fondo vivo detrás del contenido.
@@ -32,8 +32,8 @@ export function BackgroundMotion({ scene = 'halftone', sil = null }: { scene?: S
 						} as CSSVars
 					}
 				></div>
-			) : scene === 'sunburst' ? (
-				<SunburstBackdrop />
+			) : scene === 'bubbles' ? (
+				<BubblesBackdrop />
 			) : scene === 'halftone' ? (
 				<HalftoneBackdrop />
 			) : scene === 'shards' ? (

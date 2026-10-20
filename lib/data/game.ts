@@ -1,6 +1,8 @@
 /**
  * "Descending to my Heaven" video game: texts, tags, facts, features and links for its card and detail page.
  */
+import type { Shot } from '@/lib/data/projects';
+
 export type Game = {
 	/** Detail page path (a public URL, so do not change it casually). */
 	path: string;
@@ -17,9 +19,11 @@ export type Game = {
 	engine: string;
 	platform: string;
 	role: string;
-	/** Sistemas del juego (no hay capturas todavía). */
+	/** Sistemas del juego. */
 	features: string[];
 	links: { play?: string; repo?: string };
+	/** Capturas en orden; la primera es la portada de la tarjeta. Sin capturas se usa la portada tipográfica. */
+	shots?: Shot[];
 };
 
 export const game: Game = {
@@ -42,5 +46,43 @@ export const game: Game = {
 		'Soporte para mando de Xbox, final con diálogo y créditos.',
 		'Pruebas automatizadas de la lógica en modo headless.'
 	],
-	links: { repo: 'https://github.com/SoFzzz/Descending-to-my-Heaven' }
+	links: { repo: 'https://github.com/SoFzzz/Descending-to-my-Heaven' },
+	shots: [
+		{
+			src: '/projects/descending-to-my-heaven/portada.png',
+			alt: 'Menú principal de Descending to my Heaven con las opciones Iniciar, Opciones, Créditos y Salir sobre un cielo estrellado',
+			width: 1268,
+			height: 714
+		},
+		{
+			src: '/projects/descending-to-my-heaven/captura-2.png',
+			alt: 'Menú de pausa con las opciones Continuar, Opciones, Volver al menú principal y Salir del juego, sobre un patio envuelto en niebla',
+			width: 1285,
+			height: 709
+		},
+		{
+			src: '/projects/descending-to-my-heaven/captura-3.png',
+			alt: 'Kaelen con su espada roja frente al templo de tres pisos, bajo un cielo gris con niebla',
+			width: 875,
+			height: 495
+		},
+		{
+			src: '/projects/descending-to-my-heaven/captura-4.png',
+			alt: 'Combate contra Mecha King Ghidorah, el jefe mecánico de alas doradas, junto a la protagonista en una arena amurallada',
+			width: 879,
+			height: 446
+		},
+		{
+			src: '/projects/descending-to-my-heaven/captura-5.png',
+			alt: 'Combate contra Blackhorn y sus enemigos de máscara de pico en una sala de columnas, con un círculo rojo que marca la zona de ataque',
+			width: 878,
+			height: 492
+		},
+		{
+			src: '/projects/descending-to-my-heaven/captura-6.png',
+			alt: 'Combate contra Bone Dragon sobre un círculo rojo de ataque, en un pasillo de piedra en penumbra',
+			width: 876,
+			height: 492
+		}
+	]
 };

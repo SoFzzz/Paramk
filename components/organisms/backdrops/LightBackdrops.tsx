@@ -6,19 +6,42 @@ import type { CSSVars } from '@/lib/utils/css';
 const colors = ['var(--color-primary)', 'var(--color-accent)', 'var(--color-highlight)'];
 const fadeLeft = 'linear-gradient(to left, #000 15%, rgba(0,0,0,0.25) 75%, transparent 100%)';
 
-const rays = (rgb: string, a: number, step: number, w: number) =>
-	`repeating-conic-gradient(from 0deg at 50% 50%, rgba(${rgb},${a}) 0deg ${w}deg, transparent ${w}deg ${step}deg)`;
+const bubbles = Array.from({ length: 18 }, (_, i) => ({
+	left: (i * 37 + 9) % 96,
+	top: (i * 53 + 11) % 92,
+	size: 14 + ((i * 17) % 70),
+	dur: 22 + ((i * 7) % 24),
+	delay: -((i * 5.3) % 30),
+	dx: (((i * 23) % 9) - 4) * 12,
+	dy: (((i * 31) % 9) - 4) * 10,
+	color: colors[i % 3],
+	op: 0.1 + ((i * 3) % 4) * 0.035
+}));
 
-/** Escena "sunburst" (Acerca de mí): rayos que giran despacio. */
-export function SunburstBackdrop() {
+/** Acerca de mí: bolitas suaves de distintos tamaños que flotan despacio, de muy bajo contraste. */
+export function BubblesBackdrop() {
 	return (
 		<div className="absolute inset-0">
-			<div className="pf-spin absolute top-1/2 left-[22%] aspect-square w-[170vmax] -translate-x-1/2 -translate-y-1/2" style={{ '--dur': '160s' } as CSSVars}>
-				<div className="size-full" style={{ backgroundImage: rays('191,36,36', 0.075, 15, 6) }}></div>
-			</div>
-			<div className="pf-spin absolute top-1/2 left-[22%] aspect-square w-[170vmax] -translate-x-1/2 -translate-y-1/2" style={{ '--dur': '240s', animationDirection: 'reverse' } as CSSVars}>
-				<div className="size-full" style={{ backgroundImage: rays('242,149,68', 0.09, 30, 5) }}></div>
-			</div>
+			{bubbles.map((b, i) => (
+				<div
+					key={i}
+					className="pf-bubble absolute rounded-full"
+					style={
+						{
+							left: `${b.left}%`,
+							top: `${b.top}%`,
+							width: b.size,
+							height: b.size,
+							animationDuration: `${b.dur}s`,
+							animationDelay: `${b.delay}s`,
+							'--dx': `${b.dx}px`,
+							'--dy': `${b.dy}px`,
+							background: `radial-gradient(circle at 35% 30%, color-mix(in oklab, ${b.color} 75%, white) 0%, ${b.color} 70%)`,
+							opacity: b.op
+						} as CSSVars
+					}
+				></div>
+			))}
 		</div>
 	);
 }

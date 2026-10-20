@@ -4,8 +4,8 @@
  */
 import { game } from './game';
 
-/** Escena de fondo: 'split' panel oscuro + rayos · 'halftone' puntos · 'shards' cristales · 'crosses' rombos y cruces · 'petals' pétalos · 'sea' mar · 'stars' estrellas · 'metro' vagón. */
-export type Scene = 'split' | 'halftone' | 'shards' | 'crosses' | 'petals' | 'sea' | 'stars' | 'metro' | 'sunburst';
+/** Escena de fondo: 'split' panel oscuro + rayos · 'halftone' puntos · 'shards' cristales · 'crosses' rombos y cruces · 'petals' pétalos · 'sea' mar · 'stars' estrellas · 'metro' vagón · 'bubbles' bolitas que flotan. */
+export type Scene = 'split' | 'halftone' | 'shards' | 'crosses' | 'petals' | 'sea' | 'stars' | 'metro' | 'bubbles';
 
 export type NavItem = {
 	id: string;
@@ -17,7 +17,7 @@ export type NavItem = {
 /** Opciones del menú principal. */
 export const menuItems: NavItem[] = [
 	{ id: 'sobre-mi', label: 'Sobre mí', href: '/sobre-mi/', scene: 'sea' },
-	{ id: 'acerca-de-mi', label: 'Acerca de mí', href: '/acerca-de-mi/', scene: 'sunburst' },
+	{ id: 'acerca-de-mi', label: 'Acerca de mí', href: '/acerca-de-mi/', scene: 'bubbles' },
 	{ id: 'experiencia', label: 'Experiencia', href: '/experiencia/', scene: 'halftone' },
 	{ id: 'proyectos', label: 'Proyectos', href: '/proyectos/', scene: 'stars' }, // incluye el videojuego
 	{ id: 'testimonios', label: 'Testimonios', href: '/testimonios/', scene: 'petals' },

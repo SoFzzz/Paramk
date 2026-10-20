@@ -127,9 +127,6 @@
 }
 
 /* ---------- Fondos de las páginas claras ---------- */
-@keyframes pf-spin {
-	to { transform: rotate(360deg); }
-}
 @keyframes pf-dots-move {
 	to { transform: translate(var(--tile), var(--tile)); }
 }
@@ -142,7 +139,6 @@
 	12%, 85% { opacity: var(--op); }
 	100% { transform: translate3d(0, -14vh, 0) rotate(var(--spin)); opacity: 0; }
 }
-.pf-spin { animation: pf-spin var(--dur) linear infinite; }
 .pf-dots {
 	top: calc(var(--tile) * -1);
 	left: calc(var(--tile) * -1);
@@ -150,6 +146,11 @@
 	height: calc(100% + var(--tile));
 	animation: pf-dots-move var(--dur) linear infinite;
 }
+@keyframes pf-bubble-drift {
+	from { transform: translate3d(0, 0, 0) scale(1); }
+	to { transform: translate3d(var(--dx), var(--dy), 0) scale(1.12); }
+}
+.pf-bubble { animation: pf-bubble-drift 30s ease-in-out infinite alternate; }
 .pf-shard { animation: pf-shard-move 60s linear infinite; }
 .pf-rise { animation: pf-rise-move linear infinite; }
 
@@ -249,8 +250,8 @@ html[data-motion='off'] .pf-rattle,
 html[data-motion='off'] .pf-twinkle,
 html[data-motion='off'] .pf-fall,
 html[data-motion='off'] .pf-mscroll,
-html[data-motion='off'] .pf-spin,
 html[data-motion='off'] .pf-dots,
+html[data-motion='off'] .pf-bubble,
 html[data-motion='off'] .pf-shard,
 html[data-motion='off'] .pf-rise,
 html[data-motion='off'] .pf-glint {

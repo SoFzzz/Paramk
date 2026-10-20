@@ -9,6 +9,7 @@ import { profile } from '@/lib/data/profile';
 import { socials } from '@/lib/data/socials';
 import { ui } from '@/lib/data/ui';
 import { useClock } from '@/lib/utils/clock';
+import FooterSilhouette from '@/components/organisms/backdrops/FooterSilhouette';
 import { currentYear } from '@/lib/utils/date';
 
 /*
@@ -21,10 +22,15 @@ export default function Footer() {
 
 	return (
 		<footer className="relative mt-16 bg-secondary text-background">
+			{/* Silueta del fondo en naranja: el recorte del contenedor la deja visible solo sobre el pie */}
+			<div aria-hidden="true" className="pointer-events-none absolute inset-0 [clip-path:inset(0)]">
+				<FooterSilhouette />
+			</div>
+
 			{/* Franja roja con borde en diagonal */}
 			<div aria-hidden="true" className="absolute inset-x-0 -top-7 h-8 bg-primary [clip-path:polygon(0_0,100%_0,100%_40%,0_100%)]"></div>
 
-			<div className="mx-auto flex max-w-[90rem] flex-col gap-10 px-4 pt-10 pb-24 sm:px-8 sm:pb-20 lg:px-[4.5rem]">
+			<div className="relative mx-auto flex max-w-[90rem] flex-col gap-10 px-4 pt-10 pb-24 sm:px-8 sm:pb-20 lg:px-[4.5rem]">
 				<div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
 					<div className="flex flex-col gap-1.5">
 						<p className="m-0 font-display text-2xl tracking-wider text-highlight uppercase">{profile.shortName}</p>

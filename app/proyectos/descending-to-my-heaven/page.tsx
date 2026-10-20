@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Tag from '@/components/atoms/Tag';
 import ProjectLinks from '@/components/molecules/ProjectLinks';
 import SectionShell from '@/components/templates/SectionShell';
@@ -20,6 +21,23 @@ export default function GamePage() {
 		<SectionShell title={ui.game.title} backHref="/proyectos/">
 			<div className="flex flex-col gap-10 lg:flex-row lg:gap-12">
 				<div className="flex min-w-0 flex-col gap-5 lg:flex-[1.3]">
+					{game.shots?.length ? (
+						<ul className="m-0 grid min-w-0 list-none gap-4 p-0 sm:grid-cols-2">
+							{game.shots.map((shot, i) => (
+								<li key={shot.src} className={`min-w-0 self-start ${shot.width > shot.height * 1.4 ? 'sm:col-span-2' : ''}`}>
+									<Image
+										src={shot.src}
+										alt={shot.alt}
+										width={shot.width}
+										height={shot.height}
+										sizes="(min-width: 1024px) 40vw, (min-width: 640px) 45vw, 92vw"
+										priority={i === 0}
+										className="h-auto w-full bg-surface p-2 shadow-[6px_6px_0_var(--color-secondary)]"
+									/>
+								</li>
+							))}
+						</ul>
+					) : (
 					<div className="relative">
 						<div aria-hidden="true" className="absolute inset-0 translate-x-2 translate-y-2 bg-secondary md:translate-x-3.5 md:translate-y-3.5" style={{ clipPath: keyArt }}></div>
 						<div
@@ -36,6 +54,7 @@ export default function GamePage() {
 							<span className="font-display text-sm tracking-widest text-background uppercase md:text-[22px]">{game.coverText}</span>
 						</div>
 					</div>
+					)}
 
 					<div className="bg-surface p-5 shadow-[6px_6px_0_var(--color-secondary)] md:p-6">
 						<h3 className="m-0 mb-3 font-display text-2xl tracking-wide text-primary uppercase">{ui.game.features}</h3>
