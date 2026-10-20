@@ -7,6 +7,9 @@ import { ui } from '@/lib/data/ui';
 import { useClock } from '@/lib/utils/clock';
 import { academicSemester, formatMonthYear } from '@/lib/utils/date';
 
+const linkCls =
+	"w-fit px-1 text-sm font-semibold tracking-widest text-primary uppercase underline decoration-2 underline-offset-4 hover:bg-primary hover:text-white hover:no-underline data-[selected]:bg-primary data-[selected]:text-white data-[selected]:no-underline";
+
 /** Línea de tiempo vertical: marcadores angulares sobre una barra, una tarjeta por entrada. */
 export default function ExperienceTimeline({ heading, items }: { heading: string; items: ExperienceItem[] }) {
 	const now = useClock();
@@ -29,7 +32,9 @@ export default function ExperienceTimeline({ heading, items }: { heading: string
 								{it.org}
 								{it.startDate && ` · ${ui.semester(academicSemester(it.startDate, now), formatMonthYear(it.startDate))}`}
 							</span>
+							{it.badge && <span className="w-fit border-2 border-secondary px-2 py-0.5 text-[11px] font-semibold tracking-[0.14em] text-secondary uppercase">{it.badge}</span>}
 							<p className="m-0 text-base leading-relaxed">{it.description}</p>
+							{it.achievement && <p className="m-0 text-base leading-relaxed font-medium">{it.achievement}</p>}
 							{it.tags && (
 								<ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
 									{it.tags.map((t) => (
@@ -39,13 +44,19 @@ export default function ExperienceTimeline({ heading, items }: { heading: string
 									))}
 								</ul>
 							)}
-							{it.href && (
-								<TransitionLink
-									href={it.href}
-									className="w-fit px-1 text-sm font-semibold tracking-widest text-primary uppercase underline decoration-2 underline-offset-4 data-[selected]:bg-primary data-[selected]:text-white data-[selected]:no-underline"
-								>
-									{ui.experience.viewProject} →
-								</TransitionLink>
+							{(it.href || it.repo) && (
+								<div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+									{it.href && (
+										<TransitionLink href={it.href} className={linkCls}>
+											{ui.experience.viewProject} →
+										</TransitionLink>
+									)}
+									{it.repo && (
+										<a href={it.repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
+											{ui.experience.repo} ↗<span className="sr-only"> {ui.newTab}</span>
+										</a>
+									)}
+								</div>
 							)}
 						</div>
 					</li>

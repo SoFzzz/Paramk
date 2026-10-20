@@ -1,7 +1,5 @@
 'use client';
 import type { CSSVars } from '@/lib/utils/css';
-
-import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { findNav, type Scene } from '@/lib/data/nav';
 import { silhouettes, type Silhouette } from '@/lib/data/scene';
@@ -11,27 +9,10 @@ import SeaBackdrop from './backdrops/SeaBackdrop';
 import SilhouetteLayer from './backdrops/SilhouetteLayer';
 import StarsBackdrop from './backdrops/StarsBackdrop';
 
-const lastPick: Record<string, number> = {};
-
-/** Elige una silueta al azar de la bolsa de la página, tras montar (evita diferencias servidor/navegador) y sin repetir la anterior. */
-function usePick(id: string): Silhouette | null {
-	const pool = silhouettes[id] ?? [];
-	const [pick, setPick] = useState<{ id: string; i: number } | null>(null);
-	useEffect(() => {
-		if (pool.length < 2) return;
-		let i = Math.floor(Math.random() * pool.length);
-		if (i === lastPick[id]) i = (i + 1) % pool.length;
-		lastPick[id] = i;
-		setPick({ id, i });
-	}, [id, pool.length]);
-	if (pool.length === 1) return pool[0];
-	return pick && pick.id === id ? (pool[pick.i] ?? null) : null;
-}
-
-/** Fondo según la ruta actual: cada sección elige su escena (ver nav.ts) y una silueta de su bolsa (ver scene.ts). */
+/** Fondo según la ruta actual: cada sección elige su escena (ver nav.ts) y su silueta fija (ver scene.ts). */
 export default function RouteBackground() {
 	const current = findNav(usePathname());
-	return <BackgroundMotion scene={current.scene} sil={usePick(current.id)} />;
+	return <BackgroundMotion scene={current.scene} sil={silhouettes[current.id] ?? null} />;
 }
 
 // Fondo vivo detrás del contenido.
@@ -39,6 +20,19 @@ export function BackgroundMotion({ scene = 'halftone', sil = null }: { scene?: S
 	return (
 		<div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
 			{scene === 'split' ? (
+				/* franjas muy suaves que se deslizan */
+				<div
+					className="pf-stripes absolute -inset-[10%] -rotate-[8deg]"
+					style={
+						{
+							'--tile': '180px',
+							'--dur': '9s',
+							backgroundImage: 'repeating-linear-gradient(90deg, rgba(191,36,36,0.05) 0 90px, transparent 90px 180px)',
+							backgroundSize: '180px 100%'
+						} as CSSVars
+					}
+				></div>
+			) : scene === 'sunburst' ? (
 				<SunburstBackdrop />
 			) : scene === 'halftone' ? (
 				<HalftoneBackdrop />

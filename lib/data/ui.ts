@@ -44,26 +44,39 @@ export const ui = {
 	about: {
 		title: navLabel('sobre-mi'),
 		description:
-			'Quién soy, qué tecnologías manejo y mi formación en Ingeniería de Software en la Universidad Cooperativa de Colombia.',
+			'Perfil técnico de Paula Sofía González: full stack con Java, Spring Boot y Next.js, desarrollo móvil Android y Wear OS, backends en Python y videojuegos con Godot.',
+		profile: 'Perfil técnico',
+		provenBy: 'Lo demuestro en',
 		skills: 'Habilidades',
-		education: 'Formación',
+		education: 'Formación'
+	},
+	aboutMe: {
+		title: navLabel('acerca-de-mi'),
+		description: 'Quién soy más allá del código: de Pasto, Nariño, estudiante de Ingeniería de Software, y lo que me gusta hacer: dibujar, los RPG y saltar la cuerda.',
+		intro: 'Quién soy más allá del código.',
+		whoTitle: 'Quién soy',
+		who: [
+			'Soy Paula Sofía, estudiante de Ingeniería de Software en la Universidad Cooperativa de Colombia y vivo en San Juan de Pasto, Nariño.',
+			'Fuera del computador me gusta dibujar, perderme en los RPG y en los juegos de rol, y saltar la cuerda para despejar la cabeza. Mis juegos favoritos son Shin Megami Tensei: Devil Survivor y Growlanser IV.'
+		],
 		quickFacts: {
 			title: 'Datos rápidos',
 			location: 'Ubicación',
 			semester: 'Semestre',
 			languages: 'Idiomas',
-			interests: 'Intereses',
+			likes: 'Me gusta',
 			favoriteGames: 'Juegos favoritos'
 		}
 	},
 	experience: {
 		title: navLabel('experiencia'),
 		description:
-			'Experiencia académica y laboral de Paula Sofía González: Ingeniería de Software en la UCC, proyectos en equipo y trabajo como desarrolladora.',
-		intro: 'Experiencia académica y laboral: dónde estudio, con quién construí y en qué he trabajado.',
+			'Experiencia de Paula Sofía González: Ingeniería de Software en la UCC y los proyectos de desarrollo de su GitHub, con fechas, rol y tecnologías.',
+		intro: 'Mi experiencia: la universidad donde estudio y los proyectos de desarrollo que tengo en GitHub.',
 		academic: 'Experiencia académica',
-		work: 'Experiencia laboral',
-		viewProject: 'Ver proyecto'
+		projects: 'Proyectos de desarrollo',
+		viewProject: 'Ver proyecto',
+		repo: 'GitHub'
 	},
 	testimonials: {
 		title: navLabel('testimonios'),

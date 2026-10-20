@@ -9,7 +9,7 @@ const fadeLeft = 'linear-gradient(to left, #000 15%, rgba(0,0,0,0.25) 75%, trans
 const rays = (rgb: string, a: number, step: number, w: number) =>
 	`repeating-conic-gradient(from 0deg at 50% 50%, rgba(${rgb},${a}) 0deg ${w}deg, transparent ${w}deg ${step}deg)`;
 
-/** Inicio: rayos que giran despacio detrás del menú (el panel oscuro los tapa a la derecha). */
+/** Escena "sunburst" (Acerca de mí): rayos que giran despacio. */
 export function SunburstBackdrop() {
 	return (
 		<div className="absolute inset-0">

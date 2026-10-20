@@ -1,17 +1,21 @@
 import Button from '@/components/atoms/Button';
 import DownloadIcon from '@/components/atoms/DownloadIcon';
 import Tag from '@/components/atoms/Tag';
+import TransitionLink from '@/components/atoms/TransitionLink';
 import PhotoFrame from '@/components/molecules/PhotoFrame';
-import QuickFacts from '@/components/organisms/QuickFacts';
 import EducationList from '@/components/organisms/EducationList';
 import SectionShell from '@/components/templates/SectionShell';
+import { game } from '@/lib/data/game';
 import { profile } from '@/lib/data/profile';
+import { projects } from '@/lib/data/projects';
 import { pageTitle, ui } from '@/lib/data/ui';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata = buildMetadata({ title: pageTitle(ui.about.title), description: ui.about.description, path: '/sobre-mi/' });
 
-/* Habilidades: se pinta en dos sitios (con display:none en el que no se ve): arriba a la derecha desde lg, y entre la bio y Formación por debajo de lg */
+const titleOf = (slug: string) => projects.find((p) => p.slug === slug)?.title ?? game.title;
+
+/* Habilidades: se pinta en dos sitios (con display:none en el que no se ve): arriba a la derecha desde lg, y tras el perfil técnico por debajo de lg */
 function Skills() {
 	return (
 		<>
@@ -61,15 +65,29 @@ export default function AboutPage() {
 					</div>
 				</div>
 
-				<div className="flex max-w-xl flex-col gap-4 bg-surface px-5 py-4 shadow-[6px_6px_0_var(--color-secondary)]">
-					{profile.bio.map((paragraph) => (
-						<p key={paragraph} className="m-0 text-base leading-relaxed sm:text-lg">
-							{paragraph}
-						</p>
-					))}
-				</div>
-
-				<QuickFacts />
+				<section className="flex flex-col gap-3">
+					<h2 className="font-display text-[1.75rem] tracking-wider text-primary uppercase">{ui.about.profile}</h2>
+					<ul className="m-0 grid max-w-xl list-none gap-4 p-0">
+						{profile.specialties.map((s) => (
+							<li key={s.title} className="flex flex-col gap-2 bg-surface px-5 py-4 shadow-[6px_6px_0_var(--color-secondary)]">
+								<h3 className="m-0 font-display text-xl leading-tight tracking-wide uppercase sm:text-2xl">{s.title}</h3>
+								<p className="m-0 text-base leading-relaxed">{s.text}</p>
+								<p className="m-0 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+									<span className="text-[11px] font-semibold tracking-[0.14em] text-secondary uppercase">{ui.about.provenBy}</span>
+									{s.projects.map((slug) => (
+										<TransitionLink
+											key={slug}
+											href={`/proyectos/${slug}/`}
+											className="px-1 font-semibold text-primary underline decoration-2 underline-offset-4 hover:bg-primary hover:text-white hover:no-underline data-[selected]:bg-primary data-[selected]:text-white data-[selected]:no-underline"
+										>
+											{titleOf(slug)}
+										</TransitionLink>
+									))}
+								</p>
+							</li>
+						))}
+					</ul>
+				</section>
 
 				<div className="lg:hidden">
 					<Skills />

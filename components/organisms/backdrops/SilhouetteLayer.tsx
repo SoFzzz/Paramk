@@ -7,7 +7,6 @@ const place = {
 	'right-tall': 'right-[-6%] bottom-0 h-[44vh] w-[78vw] lg:right-[1%] lg:h-[96vh] lg:w-[42vw]',
 	'bottom-wide': 'right-[-4%] bottom-0 h-[30vh] w-[104vw] md:right-[2%] md:h-[58vh] md:w-[60vw]',
 	'top-right': 'right-0 top-0 h-[22vh] w-[92vw] md:h-[36vh] md:w-[52vw]',
-	corner: 'right-0 bottom-0 h-[44vh] w-[76vw] md:h-[62vh] md:w-[40vw]',
 	run: 'left-0 bottom-0 h-[20vh] w-[42vw]'
 } as const;
 const anchor = {
@@ -15,7 +14,6 @@ const anchor = {
 	'right-tall': 'center bottom',
 	'bottom-wide': 'center bottom',
 	'top-right': 'center top',
-	corner: 'right bottom',
 	run: 'center bottom'
 } as const;
 const origin = {
@@ -23,12 +21,7 @@ const origin = {
 	breathe: 'origin-bottom',
 	float: 'origin-bottom',
 	run: 'origin-bottom',
-	none: '',
-	drift: 'origin-bottom',
-	step: 'origin-bottom',
-	tilt: 'origin-bottom',
-	flutter: 'origin-bottom',
-	parallax: ''
+	none: ''
 } as const;
 
 /** Silueta de personaje: solo se usa su forma (máscara CSS), pintada del color indicado en scene.ts. */
@@ -36,7 +29,6 @@ export default function SilhouetteLayer({ sil }: { sil: Silhouette }) {
 	const url = `url(${sil.src})`;
 	// Por debajo de su ancho mínimo solo se ve si la silueta es 'sm' o define smOpacity.
 	const visibility = sil.from === 'sm' || sil.smOpacity !== undefined ? '' : sil.from === 'lg' ? 'hidden lg:block' : 'hidden md:block';
-	const fade = 'linear-gradient(to right, transparent 0%, #000 38%)';
 	const m = `${url} ${anchor[sil.pos]} / contain no-repeat`;
 	const style: CSSVars = {
 		'--o': sil.opacity,
@@ -53,7 +45,6 @@ export default function SilhouetteLayer({ sil }: { sil: Silhouette }) {
 	return (
 		<div
 			className={cx('pf-enter absolute', visibility, place[sil.pos])}
-			style={sil.pos === 'corner' ? { WebkitMaskImage: fade, maskImage: fade } : undefined}
 		>
 			{sil.anim === 'run' ? (
 				<div className="pf-run absolute inset-y-0 left-0 w-full">

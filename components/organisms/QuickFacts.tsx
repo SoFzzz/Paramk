@@ -9,12 +9,12 @@ import { academicSemester } from '@/lib/utils/date';
 export default function QuickFacts() {
 	const now = useClock();
 	const f = profile.quickFacts;
-	const q = ui.about.quickFacts;
+	const q = ui.aboutMe.quickFacts;
 	const rows: Array<{ label: string; value: string }> = [
 		{ label: q.location, value: f.location },
 		{ label: q.semester, value: `${academicSemester(profile.education[0].startDate, now)}.º · ${profile.education[0].title}` },
 		{ label: q.languages, value: f.languages.join(' · ') },
-		{ label: q.interests, value: f.interests.join(', ') },
+		{ label: q.likes, value: f.likes.join(', ') },
 		{ label: q.favoriteGames, value: f.favoriteGames.join(' · ') }
 	];
 	return (

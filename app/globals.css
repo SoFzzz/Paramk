@@ -126,43 +126,7 @@
 	animation: pf-slide var(--dur) linear infinite;
 }
 
-/* ---------- Siluetas: movimientos nuevos y fondos de las páginas claras ---------- */
-@keyframes pf-drift-in {
-	from { transform: translateX(16vw); }
-	to { transform: translateX(0); }
-}
-@keyframes pf-idle {
-	from { transform: translateY(0); }
-	to { transform: translateY(-1.4vh); }
-}
-@keyframes pf-step {
-	0%, 100% { transform: translateY(0) rotate(-0.8deg); }
-	50% { transform: translateY(-1.8vh) rotate(0.8deg); }
-}
-@keyframes pf-tilt {
-	from { transform: rotate(-4deg); }
-	to { transform: rotate(4deg); }
-}
-@keyframes pf-flutter {
-	from { transform: skewX(-2.5deg) translateX(-0.6vw); }
-	to { transform: skewX(2.5deg) translateX(0.6vw); }
-}
-@keyframes pf-parallax {
-	from { transform: translateY(0); }
-	to { transform: translateY(-9vh); }
-}
-.pf-drift { animation: pf-drift-in 3s var(--ease-out-expo) 0.9s both, pf-idle 6s ease-in-out 3.9s infinite alternate; }
-.pf-step { animation: pf-step 1.7s ease-in-out infinite; }
-.pf-tilt { animation: pf-tilt 9s ease-in-out infinite alternate; }
-.pf-flutter { animation: pf-flutter 3.4s ease-in-out infinite alternate; }
-/* Sube un poco al hacer scroll (scroll-driven); si el navegador no lo soporta, queda quieta */
-@supports (animation-timeline: scroll()) {
-	.pf-parallax {
-		animation: pf-parallax linear both;
-		animation-timeline: scroll(root block);
-	}
-}
-
+/* ---------- Fondos de las páginas claras ---------- */
 @keyframes pf-spin {
 	to { transform: rotate(360deg); }
 }
@@ -288,11 +252,6 @@ html[data-motion='off'] .pf-mscroll,
 html[data-motion='off'] .pf-spin,
 html[data-motion='off'] .pf-dots,
 html[data-motion='off'] .pf-shard,
-html[data-motion='off'] .pf-drift,
-html[data-motion='off'] .pf-step,
-html[data-motion='off'] .pf-tilt,
-html[data-motion='off'] .pf-flutter,
-html[data-motion='off'] .pf-parallax,
 html[data-motion='off'] .pf-rise,
 html[data-motion='off'] .pf-glint {
 	animation: none;

@@ -5,7 +5,7 @@
 import { game } from './game';
 
 /** Escena de fondo: 'split' panel oscuro + rayos · 'halftone' puntos · 'shards' cristales · 'crosses' rombos y cruces · 'petals' pétalos · 'sea' mar · 'stars' estrellas · 'metro' vagón. */
-export type Scene = 'split' | 'halftone' | 'shards' | 'crosses' | 'petals' | 'sea' | 'stars' | 'metro';
+export type Scene = 'split' | 'halftone' | 'shards' | 'crosses' | 'petals' | 'sea' | 'stars' | 'metro' | 'sunburst';
 
 export type NavItem = {
 	id: string;
@@ -17,6 +17,7 @@ export type NavItem = {
 /** Opciones del menú principal. */
 export const menuItems: NavItem[] = [
 	{ id: 'sobre-mi', label: 'Sobre mí', href: '/sobre-mi/', scene: 'sea' },
+	{ id: 'acerca-de-mi', label: 'Acerca de mí', href: '/acerca-de-mi/', scene: 'sunburst' },
 	{ id: 'experiencia', label: 'Experiencia', href: '/experiencia/', scene: 'halftone' },
 	{ id: 'proyectos', label: 'Proyectos', href: '/proyectos/', scene: 'stars' }, // incluye el videojuego
 	{ id: 'testimonios', label: 'Testimonios', href: '/testimonios/', scene: 'petals' },
