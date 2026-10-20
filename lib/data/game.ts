@@ -68,19 +68,19 @@ export const game: Game = {
 		},
 		{
 			src: '/projects/descending-to-my-heaven/captura-4.png',
-			alt: 'Combate contra Mecha King Ghidorah, el jefe mecánico de alas doradas, junto a la protagonista en una arena amurallada',
+			alt: 'Combate contra un jefe en una arena amurallada',
 			width: 879,
 			height: 446
 		},
 		{
 			src: '/projects/descending-to-my-heaven/captura-5.png',
-			alt: 'Combate contra Blackhorn y sus enemigos de máscara de pico en una sala de columnas, con un círculo rojo que marca la zona de ataque',
+			alt: 'Combate contra un jefe en una sala de columnas, con un círculo rojo que marca la zona de ataque',
 			width: 878,
 			height: 492
 		},
 		{
 			src: '/projects/descending-to-my-heaven/captura-6.png',
-			alt: 'Combate contra Bone Dragon sobre un círculo rojo de ataque, en un pasillo de piedra en penumbra',
+			alt: 'Combate contra un jefe sobre un círculo rojo de ataque, en un pasillo de piedra en penumbra',
 			width: 876,
 			height: 492
 		}
