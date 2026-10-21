@@ -16,7 +16,7 @@ export type NavItem = {
 
 /** Opciones del menú principal. */
 export const menuItems: NavItem[] = [
-	{ id: 'sobre-mi', label: 'Sobre mí', href: '/sobre-mi/', scene: 'sea' },
+	{ id: 'sobre-mi', label: 'Perfil técnico', href: '/sobre-mi/', scene: 'sea' },
 	{ id: 'acerca-de-mi', label: 'Acerca de mí', href: '/acerca-de-mi/', scene: 'bubbles' },
 	{ id: 'experiencia', label: 'Experiencia', href: '/experiencia/', scene: 'halftone' },
 	{ id: 'proyectos', label: 'Proyectos', href: '/proyectos/', scene: 'stars' }, // incluye el videojuego

@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 							{ui.skipLink}
 						</a>
 						<RouteBackground />
-						<main id="contenido" className="relative min-h-dvh">
+						<main id="contenido" className="relative min-h-dvh max-sm:pb-16">
 							{children}
 							<KeyNav />
 						</main>

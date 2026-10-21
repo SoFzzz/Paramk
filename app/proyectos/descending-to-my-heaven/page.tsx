@@ -18,7 +18,7 @@ const keyArt = 'polygon(0 0, 100% 0, 100% 90%, 94% 100%, 0 100%)';
 
 export default function GamePage() {
 	return (
-		<SectionShell title={ui.game.title} backHref="/proyectos/">
+		<SectionShell title={game.title} backHref="/proyectos/">
 			<div className="flex flex-col gap-10 lg:flex-row lg:gap-12">
 				<div className="flex min-w-0 flex-col gap-5 lg:flex-[1.3]">
 					{game.shots?.length ? (
@@ -57,7 +57,7 @@ export default function GamePage() {
 					)}
 
 					<div className="bg-surface p-5 shadow-[6px_6px_0_var(--color-secondary)] md:p-6">
-						<h3 className="m-0 mb-3 font-display text-2xl tracking-wide text-primary uppercase">{ui.game.features}</h3>
+						<h2 className="m-0 mb-3 font-display text-2xl tracking-wide text-primary uppercase">{ui.game.features}</h2>
 						<ul className="m-0 flex list-none flex-col gap-2.5 p-0">
 							{game.features.map((f) => (
 								<li key={f} className="flex gap-3 text-[15px] leading-relaxed">
@@ -70,27 +70,23 @@ export default function GamePage() {
 				</div>
 
 				<div className="flex min-w-0 flex-col gap-6 lg:flex-1">
-					<div>
+					<div className="flex flex-wrap items-center gap-3">
+						<span className="bg-highlight px-3 py-1 text-xs font-semibold tracking-[0.12em] text-text uppercase shadow-[3px_3px_0_var(--color-secondary)]">{ui.game.title}</span>
 						<Tag kind="status">{game.status}</Tag>
 					</div>
-					<h2 className="m-0 font-display text-[clamp(3rem,2rem+4vw,5.25rem)] leading-[0.98] tracking-wide text-primary uppercase">
-						{game.titleLines[0]}
-						<br />
-						{game.titleLines[1]}
-					</h2>
 					<p className="max-w-md text-base leading-relaxed sm:text-lg">{game.premise}</p>
 
-					<dl className="m-0 grid grid-cols-[6.5rem_minmax(0,1fr)] bg-surface shadow-[6px_6px_0_var(--color-secondary)] md:grid-cols-[7.5rem_minmax(0,1fr)] md:shadow-[8px_8px_0_var(--color-secondary)]">
+					<dl className="m-0 grid grid-cols-[7.5rem_minmax(0,1fr)] bg-surface shadow-[6px_6px_0_var(--color-secondary)] md:grid-cols-[8.5rem_minmax(0,1fr)] md:shadow-[8px_8px_0_var(--color-secondary)]">
 						{facts.map(([k, v], i) => (
 							<div key={k} className="contents">
-								<dt className={`px-4 py-3.5 text-xs font-semibold tracking-[0.12em] text-secondary uppercase ${i < facts.length - 1 ? 'border-b border-text/15' : ''}`}>{k}</dt>
+								<dt className={`px-3 sm:px-4 py-3.5 text-xs font-semibold tracking-[0.06em] text-secondary uppercase max-sm:wrap-anywhere sm:tracking-[0.12em] ${i < facts.length - 1 ? 'border-b border-text/15' : ''}`}>{k}</dt>
 								<dd className={`m-0 px-4 py-3.5 text-[15px] ${i < facts.length - 1 ? 'border-b border-text/15' : ''}`}>{v}</dd>
 							</div>
 						))}
 					</dl>
 
 					<div className="btn-row flex flex-wrap gap-4">
-						<ProjectLinks repo={game.links.repo} demo={game.links.play} />
+						<ProjectLinks repo={game.links.repo} demo={game.links.play} showUnavailable />
 					</div>
 				</div>
 			</div>

@@ -54,7 +54,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 					</ul>
 				) : project.highlights?.length ? (
 					<div className="min-w-0 self-start bg-surface p-5 shadow-[6px_6px_0_var(--color-secondary)] md:p-6 md:shadow-[8px_8px_0_var(--color-secondary)] lg:flex-[1.3]">
-						<h3 className="m-0 mb-3 font-display text-2xl tracking-wide text-primary uppercase">{ui.project.highlights}</h3>
+						<h2 className="m-0 mb-3 font-display text-2xl tracking-wide text-primary uppercase">{ui.project.highlights}</h2>
 						<ul className="m-0 flex list-none flex-col gap-2.5 p-0">
 							{project.highlights.map((h) => (
 								<li key={h} className="flex gap-3 text-[15px] leading-relaxed">
@@ -69,14 +69,14 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 				<div className="flex min-w-0 flex-col gap-6 lg:flex-1">
 					{project.logo && <Image src={project.logo.src} alt={project.logo.alt} width={project.logo.width} height={project.logo.height} className="size-16 object-contain" />}
 
-					<dl className="m-0 grid grid-cols-[6.5rem_minmax(0,1fr)] bg-surface shadow-[6px_6px_0_var(--color-secondary)] md:grid-cols-[7.5rem_minmax(0,1fr)] md:shadow-[8px_8px_0_var(--color-secondary)]">
+					<dl className="m-0 grid grid-cols-[7.5rem_minmax(0,1fr)] bg-surface shadow-[6px_6px_0_var(--color-secondary)] md:grid-cols-[8.5rem_minmax(0,1fr)] md:shadow-[8px_8px_0_var(--color-secondary)]">
 						{facts.map(([k, v]) => (
 							<div key={k} className="contents">
-								<dt className="border-b border-text/15 px-4 py-3.5 text-xs font-semibold tracking-[0.12em] text-secondary uppercase">{k}</dt>
+								<dt className="border-b border-text/15 px-3 sm:px-4 py-3.5 text-xs font-semibold tracking-[0.06em] text-secondary uppercase max-sm:wrap-anywhere sm:tracking-[0.12em]">{k}</dt>
 								<dd className="m-0 border-b border-text/15 px-4 py-3.5 text-[15px]">{v}</dd>
 							</div>
 						))}
-						<dt className="px-4 py-3.5 text-xs font-semibold tracking-[0.12em] text-secondary uppercase">{ui.project.stack}</dt>
+						<dt className="px-3 sm:px-4 py-3.5 text-xs font-semibold tracking-[0.06em] text-secondary uppercase max-sm:wrap-anywhere sm:tracking-[0.12em]">{ui.project.stack}</dt>
 						<dd className="m-0 px-4 py-3.5">
 							<ul className="m-0 flex list-none flex-wrap gap-2 p-0">
 								{project.stack.map((item) => (
@@ -89,7 +89,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 					</dl>
 
 					<div className="btn-row flex flex-wrap gap-4">
-						<ProjectLinks repo={project.repo} demo={project.demo} demoVideoHref={project.videos?.length ? '#demo' : undefined} />
+						<ProjectLinks repo={project.repo} demo={project.demo} demoVideoHref={project.videos?.length ? '#demo' : undefined} showUnavailable />
 						{project.links?.map((link) => (
 							<Button key={link.href} href={link.href} external variant="secondary">
 								{link.label}
@@ -101,9 +101,9 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
 			{project.videos?.length ? (
 				<section id="demo" aria-labelledby="demo-titulo" className="scroll-mt-24 flex flex-col gap-6">
-					<h3 id="demo-titulo" className="m-0 font-display text-[clamp(2rem,1.5rem+1.5vw,2.75rem)] leading-none tracking-wide text-primary uppercase">
+					<h2 id="demo-titulo" className="m-0 font-display text-[clamp(2rem,1.5rem+1.5vw,2.75rem)] leading-none tracking-wide text-primary uppercase">
 						{linkLabels.videoSection}
-					</h3>
+					</h2>
 					<ul className="m-0 grid list-none gap-6 p-0 md:grid-cols-2">
 						{project.videos.map((video) => (
 							<li

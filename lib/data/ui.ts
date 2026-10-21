@@ -45,7 +45,7 @@ export const ui = {
 		title: navLabel('sobre-mi'),
 		description:
 			'Perfil técnico de Paula Sofía González: full stack con Java, Spring Boot y Next.js, desarrollo móvil Android y Wear OS, backends en Python y videojuegos con Godot.',
-		profile: 'Perfil técnico',
+		profile: 'Especialidades',
 		provenBy: 'Lo demuestro en',
 		skills: 'Habilidades',
 		education: 'Formación'
@@ -132,8 +132,12 @@ export const ui = {
 				message: 'Escribe un mensaje de al menos 10 caracteres.'
 			},
 			subject: (name: string) => `Contacto desde el portafolio — ${name}`,
-			doneTitle: '¡Listo!',
-			doneText: 'Se abrió tu aplicación de correo con el mensaje. Solo falta que le des a enviar. Si no se abrió, escríbeme directamente a',
+			doneTitle: 'Abrimos tu aplicación de correo',
+			doneText: 'Si no se abrió, escríbeme directamente a',
+			doneOr: 'o por',
+			copy: 'Copiar correo',
+			copied: '¡Copiado!',
+			copyFailed: 'No se pudo copiar. Selecciona el correo y cópialo a mano.',
 			again: 'Escribir otro mensaje'
 		}
 	}

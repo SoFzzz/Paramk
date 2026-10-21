@@ -13,7 +13,7 @@ const coverBg = {
 export default function GameCard() {
 	const cover = game.shots?.[0];
 	return (
-		<article
+		<div
 			data-nav-group
 			tabIndex={0}
 			role="group"
@@ -81,6 +81,6 @@ export default function GameCard() {
 					)}
 				</div>
 			</div>
-		</article>
+		</div>
 	);
 }

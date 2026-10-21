@@ -1,7 +1,7 @@
 'use client';
 
 // Navegación con teclado estilo Persona para las páginas de sección:
-//   · Flechas (y W/A/S/D) mueven la selección en esa dirección sobre el contenido (navegación espacial).
+//   · Flechas mueven la selección en esa dirección sobre el contenido (navegación espacial).
 //     Si no hay nada seleccionado, la primera pulsación selecciona el primer elemento (el botón Volver).
 //     Si en esa dirección no hay más elementos, no se intercepta la tecla y la página se desplaza normal.
 //   · Dos niveles opcionales: un elemento con `data-nav-group` (p. ej. una tarjeta) es una unidad en el
@@ -14,7 +14,7 @@
 // En el inicio las teclas las gestiona MainMenu; aquí solo se muestra la ayuda.
 
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ui } from '@/lib/data/ui';
 import { motionOn } from '@/lib/motion/prefs';
 
@@ -22,15 +22,14 @@ const SELECTOR = 'a[href], button:not([disabled]), [role="button"]';
 const GROUP = '[data-nav-group]';
 type Dir = 'up' | 'down' | 'left' | 'right';
 const DIRS: Record<string, Dir> = {
-	ArrowUp: 'up', w: 'up', W: 'up',
-	ArrowDown: 'down', s: 'down', S: 'down',
-	ArrowLeft: 'left', a: 'left', A: 'left',
-	ArrowRight: 'right', d: 'right', D: 'right'
+	ArrowUp: 'up',
+	ArrowDown: 'down',
+	ArrowLeft: 'left',
+	ArrowRight: 'right'
 };
 
 // Curvas de anime.js equivalentes
 const OUT_EXPO = 'cubic-bezier(0.16, 1, 0.3, 1)';
-const OUT_BACK = 'cubic-bezier(0.34, 1.56, 0.64, 1)';
 
 const main = () => document.getElementById('contenido');
 const visible = (el: HTMLElement) => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
@@ -106,6 +105,47 @@ export default function KeyNav() {
 	isHomeRef.current = isHome;
 	const arrowRef = useRef<SVGSVGElement>(null);
 	const hideRef = useRef<() => void>(() => {});
+	// Ayuda de teclado: visible al cargar y al empezar a usar el teclado; se atenúa sola para no tapar contenido
+	const [hintActive, setHintActive] = useState(true);
+	const [footerIn, setFooterIn] = useState(false);
+	const hintTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+	useEffect(() => {
+		const wake = (ms: number) => {
+			setHintActive(true);
+			clearTimeout(hintTimer.current);
+			hintTimer.current = setTimeout(() => setHintActive(false), ms);
+		};
+		wake(5000);
+		let lastY = window.scrollY;
+		const onScroll = () => {
+			if (Math.abs(window.scrollY - lastY) < 40) return;
+			lastY = window.scrollY;
+			clearTimeout(hintTimer.current);
+			setHintActive(false);
+		};
+		const onKeyHint = (e: KeyboardEvent) => {
+			if (e.key.startsWith('Arrow') || e.key === 'Tab') wake(3000);
+		};
+		window.addEventListener('scroll', onScroll, { passive: true });
+		window.addEventListener('keydown', onKeyHint);
+		return () => {
+			clearTimeout(hintTimer.current);
+			window.removeEventListener('scroll', onScroll);
+			window.removeEventListener('keydown', onKeyHint);
+		};
+	}, [pathname]);
+
+	// Con el pie a la vista la ayuda se oculta siempre
+	useEffect(() => {
+		const f = document.querySelector('footer');
+		if (!f || typeof IntersectionObserver === 'undefined') return;
+		const io = new IntersectionObserver(([entry]) => setFooterIn(entry.isIntersecting), { rootMargin: '0px 0px -40px 0px' });
+		io.observe(f);
+		return () => io.disconnect();
+	}, [pathname]);
+
+	const hintShown = !footerIn && (isHome || hintActive);
 
 	useEffect(() => {
 		let current: HTMLElement | null = null;
@@ -116,7 +156,11 @@ export default function KeyNav() {
 		function hideArrow() {
 			current = null;
 			const a = arrow();
-			if (a) a.style.opacity = '0';
+			if (!a) return;
+			a.style.opacity = '0';
+			// Vuelve al origen: oculta pero desplazada seguiría ocupando espacio y, al pasar a una página
+			// más corta, alargaría el documento por debajo del pie de página
+			a.style.transform = '';
 		}
 		function hide() {
 			hideArrow();
@@ -131,7 +175,7 @@ export default function KeyNav() {
 			if (!a || !m) return;
 			// Fuera de <main> no hay flechita: si no, podría alargar el documento
 			if (!m.contains(el)) {
-				a.style.opacity = '0';
+				hideArrow();
 				return;
 			}
 			const mr = m.getBoundingClientRect();
@@ -142,7 +186,7 @@ export default function KeyNav() {
 			a.style.opacity = '1';
 			a.style.transform = `translate(${x}px, ${y}px)`;
 			if (animated && motionOn()) {
-				a.animate([{ transform: `translate(${x - 12}px, ${y}px)` }, { transform: `translate(${x}px, ${y}px)` }], { duration: 260, easing: OUT_BACK });
+				a.animate([{ transform: `translate(${x - 12}px, ${y}px)` }, { transform: `translate(${x}px, ${y}px)` }], { duration: 260, easing: OUT_EXPO });
 			}
 		}
 
@@ -289,25 +333,28 @@ export default function KeyNav() {
 
 	return (
 		<>
-			{/* Flechita del nivel 2 (dentro de una tarjeta): dentro de <main> para que se desplace con la página */}
-			<svg
-				ref={arrowRef}
-				aria-hidden="true"
-				className="pointer-events-none absolute top-0 left-0 z-30 text-primary opacity-0 max-sm:hidden"
-				width="14"
-				height="20"
-				viewBox="0 0 14 20"
-				fill="none"
-				stroke="currentColor"
-				strokeWidth="4"
-				strokeLinecap="square"
-			>
-				<path d="M3 2l8 8-8 8" />
-			</svg>
+			{/* Flechita del nivel 2 (dentro de una tarjeta): dentro de <main> para que se desplace con la página.
+			    El contenedor recortado a la caja de <main> impide que la flechita alargue el documento. */}
+			<div aria-hidden="true" className="pointer-events-none absolute inset-0 z-30 overflow-hidden max-sm:hidden">
+				<svg
+					ref={arrowRef}
+					className="absolute top-0 left-0 text-primary opacity-0"
+					width="14"
+					height="20"
+					viewBox="0 0 14 20"
+					fill="none"
+					stroke="currentColor"
+					strokeWidth="4"
+					strokeLinecap="square"
+				>
+					<path d="M3 2l8 8-8 8" />
+				</svg>
+			</div>
 
 			{/* Ayuda de teclado: solo en escritorio */}
 			<p
 				className="pointer-events-none fixed bottom-5 left-5 z-40 hidden items-center gap-3 border-2 border-secondary bg-surface/90 px-3 py-1.5 text-xs font-semibold tracking-widest text-secondary uppercase lg:flex"
+				style={{ opacity: hintShown ? 1 : 0, transition: motionOn() ? 'opacity 400ms ease-out' : 'none' }}
 				aria-hidden="true"
 			>
 				<span className="flex items-center gap-1.5">

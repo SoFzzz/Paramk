@@ -1,19 +1,24 @@
 'use client';
 
-import { useRef, useState, type FormEvent } from 'react';
-import { contactEmail } from '@/lib/data/socials';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { contactEmail, socials } from '@/lib/data/socials';
 import { ui } from '@/lib/data/ui';
 
 type Field = 'name' | 'email' | 'message';
 type Errors = Partial<Record<Field, string>>;
+type CopyState = 'idle' | 'copied' | 'failed';
 
 const copy = ui.contact.form;
+const whatsapp = socials.find((s) => s.id === 'whatsapp');
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MIN_MESSAGE = 10;
 
 const labelCls = 'font-display text-xl tracking-wider text-primary uppercase';
 const inputCls =
 	'w-full border-[3px] border-secondary bg-background px-3 py-2.5 text-base font-medium text-secondary outline-none transition-shadow placeholder:text-muted/70 focus:shadow-[4px_4px_0_var(--color-primary)] aria-[invalid=true]:border-primary';
+const errorCls = 'm-0 border-l-4 border-primary pl-2 text-sm font-semibold text-primary';
+const btnBase =
+	'min-h-12 -skew-x-6 cursor-pointer px-6 text-[15px] font-semibold tracking-[0.08em] uppercase outline-none transition-transform hover:-translate-y-0.5 focus-visible:-translate-y-0.5 focus-visible:outline-4 focus-visible:outline-accent';
 
 function validate(v: Record<Field, string>): Errors {
 	const e: Errors = {};
@@ -23,11 +28,39 @@ function validate(v: Record<Field, string>): Errors {
 	return e;
 }
 
+/** Copia por un camino antiguo (textarea + execCommand) cuando la API del portapapeles no está disponible. */
+function legacyCopy(text: string): boolean {
+	const ta = document.createElement('textarea');
+	ta.value = text;
+	ta.setAttribute('readonly', '');
+	ta.style.position = 'fixed';
+	ta.style.opacity = '0';
+	document.body.appendChild(ta);
+	ta.select();
+	let ok = false;
+	try {
+		ok = document.execCommand('copy');
+	} catch {
+		ok = false;
+	}
+	ta.remove();
+	return ok;
+}
+
 /** Formulario de contacto: no hay backend, así que prepara un mailto: con los datos y abre el correo del visitante. */
 export default function ContactForm() {
 	const [errors, setErrors] = useState<Errors>({});
 	const [done, setDone] = useState(false);
+	const [copyState, setCopyState] = useState<CopyState>('idle');
 	const formRef = useRef<HTMLFormElement>(null);
+	const emailRef = useRef<HTMLSpanElement>(null);
+
+	// El aviso de "copiado" desaparece solo tras unos segundos.
+	useEffect(() => {
+		if (copyState === 'idle') return;
+		const t = window.setTimeout(() => setCopyState('idle'), 2500);
+		return () => window.clearTimeout(t);
+	}, [copyState]);
 
 	function onSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -43,7 +76,32 @@ export default function ContactForm() {
 		const subject = copy.subject(values.name.trim());
 		const body = `Nombre: ${values.name.trim()}\nCorreo: ${values.email.trim()}\n\n${values.message.trim()}`;
 		window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+		setCopyState('idle');
 		setDone(true);
+	}
+
+	async function copyEmail() {
+		let ok = false;
+		try {
+			await navigator.clipboard.writeText(contactEmail);
+			ok = true;
+		} catch {
+			ok = legacyCopy(contactEmail);
+		}
+		if (ok) {
+			setCopyState('copied');
+			return;
+		}
+		// Si nada funciona, selecciona el correo para que el visitante lo copie a mano.
+		const node = emailRef.current;
+		if (node) {
+			const range = document.createRange();
+			range.selectNodeContents(node);
+			const sel = window.getSelection();
+			sel?.removeAllRanges();
+			sel?.addRange(range);
+		}
+		setCopyState('failed');
 	}
 
 	const clear = (f: Field) => () => errors[f] && setErrors((prev) => ({ ...prev, [f]: undefined }));
@@ -59,15 +117,41 @@ export default function ContactForm() {
 				<div role="status" className="flex flex-col items-start gap-4">
 					<p className="m-0 font-display text-3xl tracking-wide text-secondary uppercase">{copy.doneTitle}</p>
 					<p className="m-0 text-base leading-relaxed">
-						{copy.doneText} <span className="font-semibold break-all">{contactEmail}</span>.
+						{copy.doneText} <span ref={emailRef} className="font-semibold break-words">{contactEmail}</span>{' '}
+						{whatsapp ? (
+							<>
+								{copy.doneOr}{' '}
+								<a href={whatsapp.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary underline decoration-2 underline-offset-4">
+									{whatsapp.label}
+									<span className="sr-only"> {ui.newTab}</span>
+								</a>
+								.
+							</>
+						) : (
+							'.'
+						)}
 					</p>
+					<div className="flex flex-wrap items-center gap-x-5 gap-y-4">
+						<button
+							type="button"
+							onClick={copyEmail}
+							className={`${btnBase} border-[3px] border-secondary bg-background text-secondary shadow-[4px_4px_0_var(--color-primary)] hover:bg-surface`}
+						>
+							<span className="inline-block skew-x-6">{copy.copy}</span>
+						</button>
+						<span aria-live="polite" className="min-h-6 text-sm font-semibold text-primary">
+							{copyState === 'copied' && copy.copied}
+							{copyState === 'failed' && copy.copyFailed}
+						</span>
+					</div>
 					<button
 						type="button"
 						onClick={() => {
 							setDone(false);
 							setErrors({});
+							setCopyState('idle');
 						}}
-						className="min-h-12 -skew-x-6 cursor-pointer bg-primary px-6 text-[15px] font-semibold tracking-[0.08em] text-white uppercase shadow-[4px_4px_0_var(--color-secondary)] outline-none transition-transform hover:-translate-y-0.5 focus-visible:-translate-y-0.5 focus-visible:outline-4 focus-visible:outline-accent"
+						className={`${btnBase} bg-primary text-white shadow-[4px_4px_0_var(--color-secondary)]`}
 					>
 						<span className="inline-block skew-x-6">{copy.again}</span>
 					</button>
@@ -90,7 +174,7 @@ export default function ContactForm() {
 							className={inputCls}
 						/>
 						{errors.name && (
-							<p id="cf-name-err" className="m-0 border-l-4 border-primary pl-2 text-sm font-semibold text-primary">
+							<p id="cf-name-err" role="alert" className={errorCls}>
 								{errors.name}
 							</p>
 						)}
@@ -111,7 +195,7 @@ export default function ContactForm() {
 							className={inputCls}
 						/>
 						{errors.email && (
-							<p id="cf-email-err" className="m-0 border-l-4 border-primary pl-2 text-sm font-semibold text-primary">
+							<p id="cf-email-err" role="alert" className={errorCls}>
 								{errors.email}
 							</p>
 						)}
@@ -132,14 +216,14 @@ export default function ContactForm() {
 							className={`${inputCls} resize-y`}
 						/>
 						{errors.message && (
-							<p id="cf-message-err" className="m-0 border-l-4 border-primary pl-2 text-sm font-semibold text-primary">
+							<p id="cf-message-err" role="alert" className={errorCls}>
 								{errors.message}
 							</p>
 						)}
 					</div>
 					<button
 						type="submit"
-						className="mt-1 min-h-12 self-start -skew-x-6 cursor-pointer bg-primary px-7 text-[15px] font-semibold tracking-[0.08em] text-white uppercase shadow-[4px_4px_0_var(--color-secondary)] outline-none transition-transform hover:-translate-y-0.5 focus-visible:-translate-y-0.5 focus-visible:outline-4 focus-visible:outline-accent"
+						className={`${btnBase} mt-1 self-start bg-primary text-white shadow-[4px_4px_0_var(--color-secondary)]`}
 					>
 						<span className="inline-block skew-x-6">{copy.submit}</span>
 					</button>

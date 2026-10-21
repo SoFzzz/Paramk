@@ -1,5 +1,6 @@
 'use client';
 
+import MotionToggle from '@/components/molecules/MotionToggle';
 import SocialIcon from '@/components/atoms/SocialIcon';
 import TransitionLink from '@/components/atoms/TransitionLink';
 import { footer } from '@/lib/data/footer';
@@ -38,7 +39,7 @@ export default function Footer() {
 								<li key={link.id}>
 									<TransitionLink
 										href={link.href}
-										className="inline-block border-b-2 border-transparent pb-0.5 text-[14px] font-semibold tracking-[0.12em] uppercase transition-colors hover:border-accent hover:text-highlight"
+										className="relative inline-block border-b-2 after:absolute after:-inset-y-3 after:inset-x-0 after:content-[''] border-transparent pb-0.5 text-[14px] font-semibold tracking-[0.12em] uppercase transition-colors hover:border-accent hover:text-highlight"
 									>
 										{link.label}
 									</TransitionLink>
@@ -58,7 +59,7 @@ export default function Footer() {
 											href={social.url}
 											target={isMail ? undefined : '_blank'}
 											rel={isMail ? undefined : 'noopener noreferrer'}
-											className="group inline-flex items-center gap-2.5 border-b-2 border-transparent pb-0.5 text-[14px] font-semibold tracking-[0.12em] uppercase transition-colors hover:border-accent hover:text-highlight"
+											className="group relative inline-flex after:absolute after:-inset-y-3 after:inset-x-0 after:content-[''] items-center gap-2.5 border-b-2 border-transparent pb-0.5 text-[14px] font-semibold tracking-[0.12em] uppercase transition-colors hover:border-accent hover:text-highlight"
 										>
 											{social.id !== 'cv' && (
 												<span aria-hidden="true" className="flex size-5 shrink-0 items-center justify-center text-highlight transition-colors group-hover:text-accent">
@@ -80,6 +81,8 @@ export default function Footer() {
 						<span aria-hidden="true" className="h-3 w-7 shrink-0 bg-accent -skew-x-[12deg]"></span>
 						{footer.copyright(currentYear(now))}
 					</p>
+					{/* En móvil el interruptor va aquí (el fijo taparía contenido) */}
+					<MotionToggle inline />
 				</div>
 			</div>
 		</footer>

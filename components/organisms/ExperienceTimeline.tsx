@@ -8,7 +8,7 @@ import { useClock } from '@/lib/utils/clock';
 import { academicSemester, formatMonthYear } from '@/lib/utils/date';
 
 const linkCls =
-	"w-fit px-1 text-sm font-semibold tracking-widest text-primary uppercase underline decoration-2 underline-offset-4 hover:bg-primary hover:text-white hover:no-underline data-[selected]:bg-primary data-[selected]:text-white data-[selected]:no-underline";
+	"inline-flex min-h-11 w-fit items-center px-1 text-sm font-semibold sm:min-h-0 tracking-widest text-primary uppercase underline decoration-2 underline-offset-4 hover:bg-primary hover:text-white hover:no-underline data-[selected]:bg-primary data-[selected]:text-white data-[selected]:no-underline";
 
 /** Etiqueta de fecha con el recorte en diagonal de la línea de tiempo. */
 const dateChipCls =

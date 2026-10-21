@@ -10,7 +10,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 	const c = project.cover;
 	const cover = project.shots?.[0];
 	return (
-		<article
+		<div
 			data-nav-group
 			tabIndex={0}
 			role="group"
@@ -81,6 +81,6 @@ export default function ProjectCard({ project }: { project: Project }) {
 					<ProjectLinks repo={project.repo} demo={project.demo} demoVideoHref={project.videos?.length ? `/proyectos/${project.slug}/#demo` : undefined} />
 				</div>
 			</div>
-		</article>
+		</div>
 	);
 }
