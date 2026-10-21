@@ -12,7 +12,9 @@ const layer = (file: string, tile: number, dur: number): CSSVars => ({
 /** Medidas del vagón (altura de ventanas y ancho de la silueta); la copia del pie de página las repite. */
 export const wagonVars = '[--win:34vh] [--girl-w:118vw] md:[--win:44vh] md:[--girl-w:86vw] xl:[--win:52vh] xl:[--girl-w:64vw]';
 
-const girl = 'url(/characters/banca.webp)';
+/** Archivo de la silueta sentada (se precarga en BackgroundMotion). */
+export const METRO_GIRL_SRC = '/characters/banca.webp';
+const girl = `url(${METRO_GIRL_SRC})`;
 const girlMask = { WebkitMask: `${girl} center bottom / contain no-repeat`, mask: `${girl} center bottom / contain no-repeat` };
 
 // Tonos planos: el mismo rojo mezclado con el fondo, de más pálido (atrás) a más fuerte (adelante)

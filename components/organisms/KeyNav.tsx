@@ -129,10 +129,16 @@ export default function KeyNav() {
 			const m = main();
 			const a = arrow();
 			if (!a || !m) return;
+			// Fuera de <main> no hay flechita: si no, podría alargar el documento
+			if (!m.contains(el)) {
+				a.style.opacity = '0';
+				return;
+			}
 			const mr = m.getBoundingClientRect();
 			const r = el.getBoundingClientRect();
-			const x = Math.max(2, r.left - mr.left - 18);
-			const y = r.top - mr.top + r.height / 2 - 10;
+			// Acotada a la caja de <main>
+			const x = Math.min(Math.max(2, r.left - mr.left - 18), Math.max(2, m.clientWidth - 16));
+			const y = Math.min(Math.max(0, r.top - mr.top + r.height / 2 - 10), Math.max(0, m.clientHeight - 20));
 			a.style.opacity = '1';
 			a.style.transform = `translate(${x}px, ${y}px)`;
 			if (animated && motionOn()) {

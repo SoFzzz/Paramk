@@ -49,7 +49,7 @@
 	html {
 		background: var(--color-background);
 		color: var(--color-text);
-		scroll-behavior: smooth;
+		/* Sin scroll-behavior global: el desplazamiento suave lo pide el JS (KeyNav, BackToTop) solo con las animaciones activas */
 	}
 	body {
 		margin: 0;
@@ -231,6 +231,13 @@
 .pf-lean { animation: pf-lean 5s ease-in-out infinite alternate; }
 .pf-rattle { animation: pf-rattle 0.32s linear infinite; }
 
+/* Pestaña oculta: se pausan las animaciones del fondo (data-tab-hidden lo fija BackgroundMotion.tsx) */
+html[data-tab-hidden='true'] *,
+html[data-tab-hidden='true'] *::before,
+html[data-tab-hidden='true'] *::after {
+	animation-play-state: paused !important;
+}
+
 /* ---------- Movimiento reducido ----------
    data-motion lo fija un script en layout.tsx (preferencia del sistema o interruptor del sitio). */
 html[data-motion='off'] .pf-marquee,
@@ -259,9 +266,6 @@ html[data-motion='off'] .pf-glint {
 }
 html[data-motion='off'] .pf-glint {
 	opacity: 0.5;
-}
-html[data-motion='off'] {
-	scroll-behavior: auto;
 }
 html[data-motion='off'] .pf-shard {
 	transform: translateX(30vw);

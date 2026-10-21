@@ -6,7 +6,7 @@ import type { CSSVars } from '@/lib/utils/css';
 const colors = ['var(--color-primary)', 'var(--color-accent)', 'var(--color-highlight)'];
 const fadeLeft = 'linear-gradient(to left, #000 15%, rgba(0,0,0,0.25) 75%, transparent 100%)';
 
-const bubbles = Array.from({ length: 18 }, (_, i) => ({
+const bubbles = Array.from({ length: 14 }, (_, i) => ({
 	left: (i * 37 + 9) % 96,
 	top: (i * 53 + 11) % 92,
 	size: 14 + ((i * 17) % 70),
@@ -94,7 +94,7 @@ const shapes = [
 	'polygon(50% 0, 100% 50%, 50% 100%, 0 50%)',
 	'polygon(50% 0, 100% 50%, 50% 100%, 0 50%, 50% 0, 50% 24%, 24% 50%, 50% 76%, 76% 50%, 50% 24%)'
 ];
-const risers = Array.from({ length: 22 }, (_, i) => ({
+const risers = Array.from({ length: 16 }, (_, i) => ({
 	left: (i * 41 + 7) % 100,
 	size: 14 + ((i * 11) % 26),
 	dur: 20 + ((i * 7) % 18),
@@ -134,7 +134,7 @@ export function CrossesBackdrop() {
 	);
 }
 
-const petals = Array.from({ length: 26 }, (_, i) => ({
+const petals = Array.from({ length: 20 }, (_, i) => ({
 	left: (i * 37 + 5) % 100,
 	size: 12 + ((i * 13) % 20),
 	dur: 11 + ((i * 7) % 11),

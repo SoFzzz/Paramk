@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { menuItems as navItems } from '@/lib/data/nav';
 import { ui } from '@/lib/data/ui';
 import { motionOn } from '@/lib/motion/prefs';
+import { prefetchSilhouette } from '@/lib/utils/prefetchSilhouette';
 import MenuOption from '../molecules/MenuOption';
 import { useNavigate } from './TransitionProvider';
 
@@ -56,6 +57,11 @@ export default function MainMenu() {
 		window.addEventListener('keydown', onKey);
 		return () => window.removeEventListener('keydown', onKey);
 	}, [navigate]);
+
+	// La opción seleccionada es la próxima página: se baja su silueta de antemano
+	useEffect(() => {
+		prefetchSilhouette(navItems[active].href);
+	}, [active]);
 
 	// Entrada escalonada de las opciones (Web Animations API)
 	useEffect(() => {

@@ -115,7 +115,8 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 										controls
 										muted
 										playsInline
-										preload="metadata"
+										preload="none"
+										poster={video.poster}
 										src={video.src}
 										width={video.width}
 										height={video.height}

@@ -26,7 +26,7 @@ export type Project = {
 	/** shots[0] es la portada de la tarjeta; sin capturas la tarjeta usa una portada tipográfica. */
 	shots?: Shot[];
 	/** Videos de demostración (sin audio) que se muestran en la sección #demo de la página del proyecto. */
-	videos?: { src: string; title: string; width: number; height: number }[];
+	videos?: { src: string; title: string; poster?: string; width: number; height: number }[];
 	logo?: Shot;
 };
 
@@ -74,7 +74,7 @@ export const projects: Project[] = [
 			{ src: '/projects/wakesync/menu.webp', alt: 'Menú del reloj con los modos Siesta y Siesta con destino', width: 514, height: 490 },
 			{ src: '/projects/wakesync/mapa.webp', alt: 'Mapa en el reloj para fijar el destino del trayecto', width: 528, height: 484 }
 		],
-		videos: [{ src: '/projects/wakesync/demo.mp4', title: 'Demostración', width: 640, height: 640 }],
+		videos: [{ src: '/projects/wakesync/demo.mp4', title: 'Demostración', poster: '/projects/wakesync/demo-poster.webp', width: 640, height: 640 }],
 		logo: { src: '/projects/wakesync/logo.webp', alt: 'Logo de WakeSync', width: 120, height: 142 }
 	},
 	{
@@ -94,8 +94,8 @@ export const projects: Project[] = [
 			{ src: '/projects/clearread/ajustes.webp', alt: 'Ajustes de lectura de ClearRead', width: 1280, height: 684 }
 		],
 		videos: [
-			{ src: '/projects/clearread/demo-1.mp4', title: 'Parte 1', width: 1280, height: 668 },
-			{ src: '/projects/clearread/demo-2.mp4', title: 'Parte 2', width: 1280, height: 668 }
+			{ src: '/projects/clearread/demo-1.mp4', title: 'Parte 1', poster: '/projects/clearread/demo-1-poster.webp', width: 1280, height: 668 },
+			{ src: '/projects/clearread/demo-2.mp4', title: 'Parte 2', poster: '/projects/clearread/demo-2-poster.webp', width: 1280, height: 668 }
 		]
 	},
 	{
@@ -133,10 +133,10 @@ export const projects: Project[] = [
 		kind: 'personal',
 		role: 'Proyecto personal: programación de la aplicación web y de su API de respaldo.',
 		shots: [
-			{ src: '/projects/tarium/inicio.png', alt: 'Inicio de Tarium en modo claro: recomendaciones de música libre y botón para iniciar sesión', width: 1920, height: 925 },
-			{ src: '/projects/tarium/oscuro.png', alt: 'Inicio de Tarium en modo oscuro, con las mismas recomendaciones musicales', width: 1920, height: 929 },
-			{ src: '/projects/tarium/lista.png', alt: 'Biblioteca local de Tarium con tres archivos de audio importados, para reproducir, borrar o marcar como favorito', width: 1920, height: 933 },
-			{ src: '/projects/tarium/canciones.png', alt: 'Reproductor de Tarium con la canción en curso, su carátula y la cola de reproducción', width: 1920, height: 926 }
+			{ src: '/projects/tarium/inicio.webp', alt: 'Inicio de Tarium en modo claro: recomendaciones de música libre y botón para iniciar sesión', width: 1600, height: 771 },
+			{ src: '/projects/tarium/oscuro.webp', alt: 'Inicio de Tarium en modo oscuro, con las mismas recomendaciones musicales', width: 1600, height: 774 },
+			{ src: '/projects/tarium/lista.webp', alt: 'Biblioteca local de Tarium con tres archivos de audio importados, para reproducir, borrar o marcar como favorito', width: 1600, height: 778 },
+			{ src: '/projects/tarium/canciones.webp', alt: 'Reproductor de Tarium con la canción en curso, su carátula y la cola de reproducción', width: 1600, height: 772 }
 		],
 		highlights: [
 			'Reproduce desde cuatro fuentes de música y la biblioteca local de archivos de audio, con cola, favoritos y playlists.',

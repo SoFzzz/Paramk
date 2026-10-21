@@ -21,7 +21,7 @@ export default function PhotoFrame({ src = null, alt = '', className = '', posit
 			>
 				{src ? (
 					/* foto a color natural, sin filtros: se ve nítida y el rostro queda limpio */
-					<Image src={src} alt={alt} width={440} height={520} sizes="352px" priority className="size-full object-cover" style={{ objectPosition: position }} />
+					<Image src={src} alt={alt} width={440} height={520} sizes="180px" priority className="size-full object-cover" style={{ objectPosition: position }} />
 				) : (
 					<>
 						<span className="absolute bottom-4 left-4 font-display text-sm tracking-widest text-background uppercase md:text-xl">{ui.photo.placeholderText}</span>

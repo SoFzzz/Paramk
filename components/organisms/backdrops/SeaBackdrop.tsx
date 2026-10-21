@@ -61,7 +61,7 @@ const rows = Array.from({ length: ROWS }, (_, i) => {
 	};
 });
 
-const glints = Array.from({ length: 22 }, (_, i) => ({
+const glints = Array.from({ length: 14 }, (_, i) => ({
 	left: (i * 53 + 7) % 100,
 	off: 2 + ((i * 29) % 34), // vh bajo --sea-top
 	w: 20 + ((i * 7) % 34),

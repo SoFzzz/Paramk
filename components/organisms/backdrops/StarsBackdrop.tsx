@@ -5,7 +5,7 @@ import type { CSSVars } from '@/lib/utils/css';
 // iguales en el servidor y en el navegador.
 const colors = ['var(--color-primary)', 'var(--color-accent)', 'var(--color-highlight)'];
 
-const falling = Array.from({ length: 34 }, (_, i) => ({
+const falling = Array.from({ length: 24 }, (_, i) => ({
 	left: (i * 37 + 11) % 100,
 	size: 9 + ((i * 13) % 18),
 	dur: 8 + ((i * 7) % 9),

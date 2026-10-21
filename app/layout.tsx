@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Anton, Inter } from 'next/font/google';
 import './globals.css';
+import BackToTop from '@/components/atoms/BackToTop';
 import MotionToggle from '@/components/molecules/MotionToggle';
 import Footer from '@/components/organisms/Footer';
 import KeyNav from '@/components/organisms/KeyNav';
@@ -44,6 +45,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 							<KeyNav />
 						</main>
 						<Footer />
+						{/* Fuera del pie: nada fijo dentro de él */}
+						<BackToTop />
 						<TransitionCurtain />
 						<MotionToggle />
 					</TransitionProvider>

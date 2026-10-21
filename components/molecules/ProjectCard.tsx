@@ -28,7 +28,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 						alt={cover.alt}
 						width={cover.width}
 						height={cover.height}
-						sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 90vw"
+						sizes="(min-width: 768px) 340px, 300px"
 						className="max-h-[85%] max-w-[85%] w-auto object-contain shadow-[5px_5px_0_var(--color-secondary)]"
 					/>
 				) : (

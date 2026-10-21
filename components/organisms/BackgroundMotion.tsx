@@ -1,9 +1,12 @@
 'use client';
 import type { CSSVars } from '@/lib/utils/css';
 import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import { preload } from 'react-dom';
 import { findNav, type Scene } from '@/lib/data/nav';
 import { silhouetteFor, type Silhouette } from '@/lib/data/scene';
-import MetroBackdrop from './backdrops/MetroBackdrop';
+import FooterSilhouette from './backdrops/FooterSilhouette';
+import MetroBackdrop, { METRO_GIRL_SRC } from './backdrops/MetroBackdrop';
 import { BubblesBackdrop, CrossesBackdrop, HalftoneBackdrop, PetalsBackdrop, ShardsBackdrop } from './backdrops/LightBackdrops';
 import SeaBackdrop from './backdrops/SeaBackdrop';
 import SilhouetteLayer from './backdrops/SilhouetteLayer';
@@ -12,13 +15,34 @@ import StarsBackdrop from './backdrops/StarsBackdrop';
 /** Fondo según la ruta actual: cada sección elige su escena (ver nav.ts) y su silueta fija (ver scene.ts). */
 export default function RouteBackground() {
 	const current = findNav(usePathname());
-	return <BackgroundMotion scene={current.scene} sil={silhouetteFor(current.id, current.href)} />;
+	const sil = silhouetteFor(current.id, current.href);
+	// La silueta de esta página baja junto con el HTML (en el <head>), no después de hidratar.
+	const src = sil ? sil.src : current.scene === 'metro' ? METRO_GIRL_SRC : null;
+	if (src) preload(src, { as: 'image', fetchPriority: 'high', crossOrigin: 'anonymous' });
+
+	// Con la pestaña oculta se pausan todas las animaciones del fondo (ver globals.css)
+	useEffect(() => {
+		const sync = () => {
+			document.documentElement.dataset.tabHidden = document.hidden ? 'true' : 'false';
+		};
+		sync();
+		document.addEventListener('visibilitychange', sync);
+		return () => document.removeEventListener('visibilitychange', sync);
+	}, []);
+
+	return (
+		<>
+			<BackgroundMotion scene={current.scene} sil={sil} />
+			{/* Segunda capa fija, FUERA del pie: la silueta en naranja, recortada a la zona del pie */}
+			<FooterSilhouette />
+		</>
+	);
 }
 
 // Fondo vivo detrás del contenido.
 export function BackgroundMotion({ scene = 'halftone', sil = null }: { scene?: Scene; sil?: Silhouette | null }) {
 	return (
-		<div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+		<div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden [contain:paint]">
 			{scene === 'split' ? (
 				/* franjas muy suaves que se deslizan */
 				<div

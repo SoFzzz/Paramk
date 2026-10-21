@@ -49,37 +49,37 @@ export const game: Game = {
 	links: { repo: 'https://github.com/SoFzzz/Descending-to-my-Heaven' },
 	shots: [
 		{
-			src: '/projects/descending-to-my-heaven/portada.png',
+			src: '/projects/descending-to-my-heaven/portada.webp',
 			alt: 'Menú principal de Descending to my Heaven con las opciones Iniciar, Opciones, Créditos y Salir sobre un cielo estrellado',
 			width: 1268,
 			height: 714
 		},
 		{
-			src: '/projects/descending-to-my-heaven/captura-2.png',
+			src: '/projects/descending-to-my-heaven/captura-2.webp',
 			alt: 'Menú de pausa con las opciones Continuar, Opciones, Volver al menú principal y Salir del juego, sobre un patio envuelto en niebla',
 			width: 1285,
 			height: 709
 		},
 		{
-			src: '/projects/descending-to-my-heaven/captura-3.png',
+			src: '/projects/descending-to-my-heaven/captura-3.webp',
 			alt: 'Kaelen con su espada roja frente al templo de tres pisos, bajo un cielo gris con niebla',
 			width: 875,
 			height: 495
 		},
 		{
-			src: '/projects/descending-to-my-heaven/captura-4.png',
+			src: '/projects/descending-to-my-heaven/captura-4.webp',
 			alt: 'Combate contra un jefe en una arena amurallada',
 			width: 879,
 			height: 446
 		},
 		{
-			src: '/projects/descending-to-my-heaven/captura-5.png',
+			src: '/projects/descending-to-my-heaven/captura-5.webp',
 			alt: 'Combate contra un jefe en una sala de columnas, con un círculo rojo que marca la zona de ataque',
 			width: 878,
 			height: 492
 		},
 		{
-			src: '/projects/descending-to-my-heaven/captura-6.png',
+			src: '/projects/descending-to-my-heaven/captura-6.webp',
 			alt: 'Combate contra un jefe sobre un círculo rojo de ataque, en un pasillo de piedra en penumbra',
 			width: 876,
 			height: 492

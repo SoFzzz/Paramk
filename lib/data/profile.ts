@@ -11,7 +11,7 @@ export const profile = {
 	/** Ruta de la foto procesada (WebP). Si es null se muestra el marcador. */
 	photo: '/photo.webp' as string | null,
 	/** Foto informal para "Acerca de mí". */
-	photoCasual: '/photo-sof.png' as string | null,
+	photoCasual: '/photo-sof.webp' as string | null,
 	/** Perfil técnico (Sobre mí): cada especialidad se respalda con proyectos reales (slugs de projects.ts / game.ts). */
 	specialties: [
 		{

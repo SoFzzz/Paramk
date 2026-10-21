@@ -31,7 +31,7 @@ export default function GameCard() {
 						alt={cover.alt}
 						width={cover.width}
 						height={cover.height}
-						sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 90vw"
+						sizes="(min-width: 768px) 340px, 300px"
 						className="max-h-[85%] max-w-[85%] w-auto object-contain shadow-[5px_5px_0_var(--color-secondary)]"
 					/>
 					<span className="absolute right-3 bottom-3 bg-highlight px-3 py-1 text-[11px] font-semibold tracking-[0.12em] text-text uppercase md:text-xs">
