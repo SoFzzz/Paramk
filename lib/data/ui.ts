@@ -52,12 +52,12 @@ export const ui = {
 	},
 	aboutMe: {
 		title: navLabel('acerca-de-mi'),
-		description: 'Quién soy más allá del código: de Pasto, Nariño, estudiante de Ingeniería de Software, y lo que me gusta hacer: dibujar, los RPG y saltar la cuerda.',
-		intro: 'Quién soy más allá del código.',
-		whoTitle: 'Quién soy',
+		description: 'Más allá del código: de Pasto, Nariño, estudiante de Ingeniería de Software, y lo que me gusta hacer: dibujar, los RPG y saltar la cuerda.',
+		intro: 'Más allá del código.',
+		whoTitle: 'Un poco de mí',
 		who: [
-			'Soy Paula Sofía, estudiante de Ingeniería de Software en la Universidad Cooperativa de Colombia y vivo en San Juan de Pasto, Nariño.',
-			'Fuera del computador me gusta dibujar, perderme en los RPG y en los juegos de rol, y saltar la cuerda para despejar la cabeza. Mis juegos favoritos son Shin Megami Tensei: Devil Survivor y Growlanser IV.'
+			'Me llamo Paula Sofía, estudio Ingeniería de Software en la Universidad Cooperativa de Colombia y vivo en Pasto, Nariño.',
+			'Fuera del computador me gusta dibujar, perderme en los RPG y en los juegos de rol, y saltar la cuerda para despejar la cabeza. Mis juegos favoritos son Shin Megami Tensei - Devil Survivor y Growlanser IV.'
 		],
 		quickFacts: {
 			title: 'Datos rápidos',

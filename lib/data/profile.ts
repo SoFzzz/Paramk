@@ -49,10 +49,10 @@ export const profile = {
 	cv: { href: '/cv/Paula-Sofia-Gonzalez-CV.pdf', label: 'Descargar CV (PDF)' },
 	/** "Datos rápidos" de Acerca de mí. El semestre se calcula a partir de `education[0].startDate`. */
 	quickFacts: {
-		location: 'San Juan de Pasto, Nariño (Colombia)',
+		location: 'Pasto, Nariño',
 		languages: ['Español (nativo)', 'Inglés B2'],
 		likes: ['Dibujar', 'Los RPG y los juegos de rol', 'Saltar la cuerda'],
-		favoriteGames: ['Shin Megami Tensei: Devil Survivor', 'Growlanser IV']
+		favoriteGames: ['Shin Megami Tensei - Devil Survivor', 'Growlanser IV']
 	},
 	education: [
 		{
