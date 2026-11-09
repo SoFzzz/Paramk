@@ -54,9 +54,11 @@ export const projects: Project[] = [
 		kind: 'personal',
 		role: 'Proyecto personal: idea, planificación, diseño y programación.',
 		shots: [
-			{ src: '/projects/likka-pet/menu.webp', alt: 'Pantalla principal de Likka-Pet: la mascota vigila el tiempo en redes del día', width: 330, height: 649 },
-			{ src: '/projects/likka-pet/dormido.webp', alt: 'Likka-Pet en modo descanso, con la mascota dormida', width: 319, height: 636 },
-			{ src: '/projects/likka-pet/aparece.webp', alt: 'Likka aparece sobre otra app con un mensaje para dejar de procrastinar', width: 560, height: 328 }
+			{ src: '/projects/likka-pet/panel.webp', alt: 'Pantalla principal de Likka-Pet: la mascota vigila el tiempo en redes del día, con avisos, días de racha y botón para pausar', width: 540, height: 1200 },
+			{ src: '/projects/likka-pet/niveles.webp', alt: 'Pantalla "Cómo funciona": los tres niveles de aviso de Likka, de susurro a furia', width: 540, height: 1200 },
+			{ src: '/projects/likka-pet/susurro.webp', alt: 'Likka se asoma sobre otra app y muestra un mensaje para dejar de mirar las redes', width: 540, height: 1200 },
+			{ src: '/projects/likka-pet/furia.webp', alt: 'Nivel 3 de Likka: pantalla completa con la mascota furiosa y cuenta regresiva para volver al inicio', width: 540, height: 1200 },
+			{ src: '/projects/likka-pet/ajustes.webp', alt: 'Ajustes de Likka-Pet: tema, idioma, apps vigiladas y mensajes con IA', width: 540, height: 1200 }
 		]
 	},
 	{
@@ -71,8 +73,11 @@ export const projects: Project[] = [
 		kind: 'personal',
 		role: 'Proyecto personal: idea, planificación, diseño y programación.',
 		shots: [
-			{ src: '/projects/wakesync/menu.webp', alt: 'Menú del reloj con los modos Siesta y Siesta con destino', width: 514, height: 490 },
-			{ src: '/projects/wakesync/mapa.webp', alt: 'Mapa en el reloj para fijar el destino del trayecto', width: 528, height: 484 }
+			{ src: '/projects/wakesync/inicio.webp', alt: 'Pantalla de inicio de WakeSync en el reloj, con los modos Siesta y Siesta con destino', width: 454, height: 454 },
+			{ src: '/projects/wakesync/mapa-destino.webp', alt: 'Mapa en el reloj para elegir el destino del trayecto, con un marcador y el botón Fijar destino', width: 454, height: 454 },
+			{ src: '/projects/wakesync/transito.webp', alt: 'Seguimiento del trayecto en el reloj, con la distancia que falta para llegar al destino', width: 454, height: 454 },
+			{ src: '/projects/wakesync/siesta-destino.webp', alt: 'Siesta con destino: nivel de reposo, ritmo cardíaco y distancia al destino en la pantalla del reloj', width: 454, height: 454 },
+			{ src: '/projects/wakesync/alarma.webp', alt: 'Alerta en el reloj al acercarse al destino, con el botón para descartar la alarma', width: 454, height: 454 }
 		],
 		videos: [{ src: '/projects/wakesync/demo.mp4', title: 'Demostración', poster: '/projects/wakesync/demo-poster.webp', width: 640, height: 640 }],
 		logo: { src: '/projects/wakesync/logo.webp', alt: 'Logo de WakeSync', width: 120, height: 142 }
@@ -89,9 +94,11 @@ export const projects: Project[] = [
 		kind: 'personal',
 		role: 'Proyecto personal: idea, planificación, diseño y programación.',
 		shots: [
-			{ src: '/projects/clearread/claro.webp', alt: 'Inicio de ClearRead en modo claro: continuar lectura y subir un PDF o una foto', width: 1280, height: 651 },
-			{ src: '/projects/clearread/oscuro.webp', alt: 'Inicio de ClearRead en modo oscuro', width: 1280, height: 687 },
-			{ src: '/projects/clearread/ajustes.webp', alt: 'Ajustes de lectura de ClearRead', width: 1280, height: 684 }
+			{ src: '/projects/clearread/lectura-voz.webp', alt: 'Lectura en voz alta en ClearRead: la palabra que suena resaltada, la línea actual marcada y las sílabas en dos colores', width: 1280, height: 800 },
+			{ src: '/projects/clearread/inicio-biblioteca.webp', alt: 'Inicio de ClearRead en modo claro: continuar lectura, subir un PDF o una foto, cifras de lectura y biblioteca con carpetas', width: 1280, height: 800 },
+			{ src: '/projects/clearread/asistente-ia.webp', alt: 'Menú contextual sobre una palabra y panel del asistente de IA con el párrafo simplificado', width: 1280, height: 792 },
+			{ src: '/projects/clearread/lectura-oscuro.webp', alt: 'Lectura en modo oscuro con las sílabas alternadas en amarillo y lila', width: 1280, height: 800 },
+			{ src: '/projects/clearread/ajustes.webp', alt: 'Ajustes de lectura de ClearRead en modo oscuro: tema, fuente, espacios del texto, sílabas de colores, voz y vista previa', width: 1280, height: 684 }
 		],
 		videos: [
 			{ src: '/projects/clearread/demo-1.mp4', title: 'Parte 1', poster: '/projects/clearread/demo-1-poster.webp', width: 1280, height: 668 },
