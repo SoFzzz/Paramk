@@ -4,19 +4,7 @@ import { cx } from '@/lib/utils/cx';
 
 const shape = 'polygon(14% 0, 100% 0, 100% 86%, 86% 100%, 0 100%, 0 14%)';
 
-export default function PhotoFrame({
-	src = null,
-	alt = '',
-	className = '',
-	position = 'center',
-	sizes = '180px'
-}: {
-	src?: string | null;
-	alt?: string;
-	className?: string;
-	position?: string;
-	sizes?: string;
-}) {
+export default function PhotoFrame({ src = null, alt = '', className = '', position = 'center' }: { src?: string | null; alt?: string; className?: string; position?: string }) {
 	return (
 		<div className={cx('relative', className)}>
 			{/* sombra dura detrás del marco (naranja, para que se lea sobre el panel oscuro) */}
@@ -33,7 +21,7 @@ export default function PhotoFrame({
 			>
 				{src ? (
 					/* foto a color natural, sin filtros: se ve nítida y el rostro queda limpio */
-					<Image src={src} alt={alt} width={440} height={520} sizes={sizes} priority className="size-full object-cover" style={{ objectPosition: position }} />
+					<Image src={src} alt={alt} width={440} height={520} sizes="180px" priority className="size-full object-cover" style={{ objectPosition: position }} />
 				) : (
 					<>
 						<span className="absolute bottom-4 left-4 font-display text-sm tracking-widest text-background uppercase md:text-xl">{ui.photo.placeholderText}</span>

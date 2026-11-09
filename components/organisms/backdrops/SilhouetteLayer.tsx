@@ -4,7 +4,7 @@ import { cx } from '@/lib/utils/cx';
 
 const place = {
 	right: 'right-[-8%] bottom-0 h-[55vh] w-[80vw] md:right-[2%] md:h-[84vh] md:w-[34vw]',
-	'right-tall': 'right-[2%] bottom-0 h-[34vh] w-[46vw] lg:right-[2%] lg:h-[64vh] lg:w-[29vw]',
+	'right-tall': 'right-[-6%] bottom-0 h-[44vh] w-[78vw] lg:right-[1%] lg:h-[96vh] lg:w-[42vw]',
 	'bottom-wide': 'right-[-4%] bottom-0 h-[30vh] w-[104vw] md:right-[2%] md:h-[58vh] md:w-[60vw]',
 	'top-right': 'right-0 top-0 h-[22vh] w-[92vw] md:h-[36vh] md:w-[52vw]',
 	run: 'left-0 bottom-0 h-[20vh] w-[42vw]',

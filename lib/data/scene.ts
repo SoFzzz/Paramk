@@ -34,7 +34,7 @@ const c = (name: string) => `/characters/${name}`;
 
 export const silhouettes: Record<string, Silhouette | null> = {
 	// Shiori mira hacia el menú, sobre el panel oscuro
-	inicio: { src: c('shiori.webp'), pos: 'right-tall', anim: 'breathe', tone: 'accent', opacity: 0.9, from: 'sm' },
+	inicio: { src: c('shiori-2.webp'), pos: 'right-tall', anim: 'breathe', tone: 'accent', opacity: 0.9, from: 'sm' },
 	// Quieta: el movimiento está en el mar
 	'sobre-mi': { src: c('touhou.webp'), pos: 'bottom-wide', anim: 'none', tone: 'primary', opacity: 0.62, from: 'sm' },
 	// Página nueva (columna de lectura a la izquierda): figura serena y quieta a la derecha
