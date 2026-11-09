@@ -8,10 +8,12 @@ export const profile = {
 	role: 'Full Stack Developer Junior',
 	studies: 'Ingeniería de Software · UCC',
 	tagline: 'Me gusta convertir ideas en software y descubrir nuevas formas de construir tecnología.',
-	/** Ruta de la foto procesada (WebP). Si es null se muestra el marcador. */
+	/** Foto de perfil del inicio (WebP). Si es null se muestra el marcador. */
 	photo: '/photo.webp' as string | null,
-	/** Foto informal para "Acerca de mí". */
+	/** Foto informal para "Perfil técnico". */
 	photoCasual: '/photo-sof.webp' as string | null,
+	/** Foto del encuentro de semilleros para "Acerca de mí". */
+	photoEvent: '/photo-evento.webp' as string | null,
 	/** Perfil técnico (Sobre mí): cada especialidad se respalda con proyectos reales (slugs de projects.ts / game.ts). */
 	specialties: [
 		{

@@ -13,7 +13,7 @@ export default function AboutMePage() {
 			{/* Columna de lectura a la izquierda; la derecha queda libre para la silueta */}
 			<div className="flex min-w-0 flex-col gap-7 lg:max-w-[44%]">
 				<div className="flex flex-wrap items-start gap-7">
-					<PhotoFrame src={profile.photoCasual} alt={ui.photo.alt(profile.name)} className="h-52 w-44 shrink-0" position="62% 28%" />
+					<PhotoFrame src={profile.photoEvent} alt={ui.photo.alt(profile.name)} className="h-52 w-44 shrink-0" position="50% 30%" />
 					<div className="flex min-w-0 flex-1 basis-60 flex-col gap-1.5">
 						<span className="font-display text-[clamp(1.75rem,1.2rem+2vw,2.25rem)] leading-tight tracking-wide text-primary uppercase">{ui.aboutMe.whoTitle}</span>
 						<span className="text-base font-medium">{profile.shortName}</span>
