@@ -57,7 +57,7 @@ export const ui = {
 		whoTitle: 'Un poco de mí',
 		who: [
 			'Me llamo Paula Sofía, estudio Ingeniería de Software en la Universidad Cooperativa de Colombia y vivo en Pasto, Nariño.',
-			'Fuera del computador me gusta dibujar, perderme en los RPG y en los juegos de rol, y saltar la cuerda para despejar la cabeza. Mis juegos favoritos son Shin Megami Tensei - Devil Survivor y Growlanser IV.'
+			'Fuera del trabajo me gusta dibujar y jugar videojuegos, sobre todo RPG. Mis sagas favoritas son Shin Megami Tensei y Growlanser. También disfruto saltar la cuerda para despejar la mente.'
 		],
 		quickFacts: {
 			title: 'Datos rápidos',
